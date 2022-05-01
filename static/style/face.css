@@ -1,0 +1,16 @@
+#container {
+  width: fit-content;
+  margin: 0 auto;
+  position: relative; /* 座標指定を相対値指定にする */
+}
+
+#video {
+  transform: scaleX(-1); /* 左右反転させる */
+}
+
+#faceCanvas {
+  transform: scaleX(-1); /* 左右反転させる */
+  position: absolute; /* 座標指定を絶対値指定にして */
+  left: 0; /* X座標を0に */
+  top: 0; /* Y座標を0に */
+}
