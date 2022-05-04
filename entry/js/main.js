@@ -1,1 +1,1 @@
-console.log("JS bundle success!!");
+import './face_func.js';
