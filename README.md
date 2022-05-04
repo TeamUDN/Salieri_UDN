@@ -1,4 +1,4 @@
-# Salieri_UDN 
+# Salieri_UDN
 
 
 ## 環境構築
@@ -17,4 +17,9 @@ source .venv/bin/activate
 ```
 pip install flask
 pip install gunicorn
+```
+
+ビルド
+```
+npm run build
 ```
