@@ -55,10 +55,10 @@ const face = new Vue({
           //x方向の値を計算する
           if (positions != false) {
 
-            //☆顔認識した経過時間を1フレーム追加 20フレーム以上ならフラグを変更
+            //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
             facetimeCount += 1
             NotfacetimeCount = 0;
-            if (facetimeCount >= 20) {
+            if (facetimeCount >= 300) {
               cameraChange = true
             }
 
@@ -81,8 +81,8 @@ const face = new Vue({
             //☆顔認識時間経過をリセット
             facetimeCount = 0;
             NotfacetimeCount += 1;
-            //☆300フレーム以上人を認識しなければフラグを元に戻る
-            if (NotfacetimeCount >= 300) {
+            //☆約3分人を認識しなければフラグを元に戻す
+            if (NotfacetimeCount >= 10800) {
               cameraChange = false
             }
 
