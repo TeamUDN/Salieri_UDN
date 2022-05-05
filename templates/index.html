@@ -1,9 +1,17 @@
-<html>
-  <head>
-    <title>さりえり</title>
-  </head>
-  <body>
-    <h1>さりえり</h1>
-    
-  </body>
-</html>
+{% extends "layout.html" %}{% block content %}
+
+<div id="face">
+  <div id="container">
+    <video id="video" width="500" height="300" autoplay playsinline="true"></video>
+    <canvas id="faceCanvas" width="500" height="300"></canvas>
+  </div>
+  <button style="color:#fff" @click="faceFuncStop()">Camera Stop</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+<script src="../static/js/clmtrackr.js"></script>
+<script src="../static/js/model_pca_20_svm.js"></script>
+<script src="../static/webpack/main.js"></script>
+
+{% endblock %}

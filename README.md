@@ -1,4 +1,4 @@
-# Salieri_UDN 
+# Salieri_UDN
 
 
 ## 環境構築
@@ -19,7 +19,7 @@ pip install flask
 pip install gunicorn
 ```
 
-## 起動
+ビルド
 ```
-python app.py
+npm run build
 ```
