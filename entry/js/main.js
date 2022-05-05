@@ -1,1 +1,1 @@
-import './face_func.js';
+import './face.js';
