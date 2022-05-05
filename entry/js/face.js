@@ -40,6 +40,7 @@ const face = new Vue({
 
       //☆ページ遷移用のカウントとフラグ
       var facetimeCount = 0;
+      var NotfacetimeCount = 0;
       var cameraChange = false;
 
       var self = this;
@@ -56,6 +57,7 @@ const face = new Vue({
 
             //☆顔認識した経過時間を1フレーム追加 20フレーム以上ならフラグを変更
             facetimeCount += 1
+            NotfacetimeCount = 0;
             if (facetimeCount >= 20) {
               cameraChange = true
             }
@@ -78,6 +80,11 @@ const face = new Vue({
 
             //☆顔認識時間経過をリセット
             facetimeCount = 0;
+            NotfacetimeCount += 1;
+            //☆300フレーム以上人を認識しなければフラグを元に戻る
+            if (NotfacetimeCount >= 300) {
+              cameraChange = false
+            }
 
           }
         })();
