@@ -18,3 +18,8 @@ source .venv/bin/activate
 pip install flask
 pip install gunicorn
 ```
+
+## 起動
+```
+python app.py
+```
