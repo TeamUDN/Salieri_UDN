@@ -38,6 +38,11 @@ const face = new Vue({
       // video 要素内でフェイストラッキング開始
       tracker.start(video);
 
+      //☆ページ遷移用のカウントとフラグ
+      var facetimeCount = 0;
+      var NotfacetimeCount = 0;
+      var cameraChange = false;
+
       var self = this;
       this.$nextTick(() => {
         // 描画ループ
@@ -49,6 +54,14 @@ const face = new Vue({
           //ここで現在位置と前回位置の計算を行う
           //x方向の値を計算する
           if (positions != false) {
+
+            //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
+            facetimeCount += 1
+            NotfacetimeCount = 0;
+            if (facetimeCount >= 300) {
+              cameraChange = true
+            }
+
             //距離基底
             var abs_dis_x = positions[14][0] - positions[0][0];
             var abs_x = Math.round(1000 * (positions[50][0] - positions[44][0]) / abs_dis_x);
@@ -61,9 +74,18 @@ const face = new Vue({
             context.clearRect(0, 0, canvas.width, canvas.height);
             // canvas にトラッキング結果を描画
             tracker.draw(canvas);
-          }else {
+          } else {
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
+
+            //☆顔認識時間経過をリセット
+            facetimeCount = 0;
+            NotfacetimeCount += 1;
+            //☆約3分人を認識しなければフラグを元に戻す
+            if (NotfacetimeCount >= 10800) {
+              cameraChange = false
+            }
+
           }
         })();
       });
