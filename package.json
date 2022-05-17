@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/three": "^0.140.0",
     "css-loader": "^6.7.1",
     "mini-css-extract-plugin": "^2.6.0",
     "node-sass": "^7.0.1",
@@ -17,7 +18,6 @@
   },
   "dependencies": {
     "@pixiv/three-vrm": "^0.6.11",
-    "@types/three": "^0.140.0",
     "three": "^0.140.0"
   }
 }
