@@ -14,5 +14,10 @@
   },
   "scripts": {
     "build": "webpack"
+  },
+  "dependencies": {
+    "@pixiv/three-vrm": "^0.6.11",
+    "three": "^0.140.0",
+    "@types/three": "^0.140.0"
   }
 }
