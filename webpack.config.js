@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     'main': './entry/js/main.js',
     'main.css': './entry/style/main.scss',
+    'top': './entry/js/top.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/webpack/'),
@@ -19,7 +20,7 @@ module.exports = {
       {
         test: /.(ts|tsx)?$/,
         loader: 'ts-loader',
-        include: [path.resolve(__dirname, 'src/entry')],
+        include: [path.resolve(__dirname, './entry')],
         exclude: [/node_modules/]
       },
       // Sass
