@@ -1,9 +1,16 @@
 {% extends "layout.html" %}{% block content %}
 
 <div id="face">
+  <!-- トップページ -->
   <div id="modal">
+    <p>Automatic Visitor Reception System</p>
     <img src="../static/img/Salieri.png" alt="Salieri logo">
+    <div>
+      <p>Detection mode</p>
+      <p>Produced by UDN</p>
+    </div>
   </div>
+  <!-- 対話ページ -->
   <div id="container">
     <video id="video" width="500" height="300" autoplay playsinline="true"></video>
     <canvas id="faceCanvas" width="500" height="300"></canvas>
@@ -13,8 +20,18 @@
     <div id="modelArea" class="topModelArea">
       <canvas id="canvas"></canvas>
     </div>
+    <!-- select area -->
+    <div>
+      <p>ここに選択肢などを表示</p>
+    </div>
+    <!-- message area -->
+    <div>
+      <p>ここにSalieriちゃんのメッセージを表示</p>
+    </div>
+    <img src="../static/img/Salieri.png" alt="Salieri logo">
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
 <script src="../static/js/clmtrackr.js"></script>
