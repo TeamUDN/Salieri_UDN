@@ -78,7 +78,8 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            if (NotfacetimeCount >= 10800) {
+            //if (NotfacetimeCount >= 10800) {
+            if (NotfacetimeCount >= 300) {//デバック用（5秒）
               self.pageChangeFlag = false
             }
 
