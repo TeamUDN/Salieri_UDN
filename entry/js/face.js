@@ -87,6 +87,7 @@ const face = new Vue({
         })();
       });
     },
+    /*
     faceFuncStop: function () {
       cancelAnimationFrame(this.animationFrame);
       console.log('stop!')
@@ -94,5 +95,6 @@ const face = new Vue({
       var context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
+    */
   },
 });
