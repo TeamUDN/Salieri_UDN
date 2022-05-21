@@ -3,19 +3,12 @@ const face = new Vue({
   // FlaskとVueを共存させるためにDelimiterを変更する
   delimiters: ["[[", "]]"],
   data: {
-    testMessage: 'Vue Test Success !!',
     pageChangeFlag: false,
   },
   mounted: function () {
-    //this.test();
     this.faceFuncStart();
   },
   methods: {
-    /*
-    test: function () {
-      console.log(this.testMessage);
-    },
-    */
     faceFuncStart: function () {
       var video = document.getElementById("video");
       var canvas = document.getElementById("faceCanvas");
