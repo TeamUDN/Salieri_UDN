@@ -2,7 +2,7 @@
 
 <div id="face">
   <!-- トップページ -->
-  <div id="modal">
+  <div id="modal" v-show="!pageChangeFlag">
     <p>Automatic Visitor Reception System</p>
     <img src="../static/img/Salieri.png" alt="Salieri logo">
     <div>
@@ -10,13 +10,14 @@
       <p>Produced by UDN</p>
     </div>
   </div>
-  <!-- 対話ページ -->
+  <!-- 対話ページ（後で消すデバック用カメラ表示部分） -->
   <div id="container">
     <video id="video" width="500" height="300" autoplay playsinline="true"></video>
     <canvas id="faceCanvas" width="500" height="300"></canvas>
   </div>
   <button style="color:#fff" @click="faceFuncStop()">Camera Stop</button>
-  <div id="mainArea">
+  <!-- 対話ページ -->
+  <div id="mainArea" v-show="pageChangeFlag">
     <div id="modelArea" class="topModelArea">
       <canvas id="canvas"></canvas>
     </div>
