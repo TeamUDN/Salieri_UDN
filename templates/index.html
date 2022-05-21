@@ -2,7 +2,7 @@
 
 <div id="face">
   <!-- トップページ -->
-  <div id="modal" v-show="!pageChangeFlag">
+  <div id="modal" v-show="pageChangeFlag">
     <p>Automatic Visitor Reception System</p>
     <img src="../static/img/Salieri.png" alt="Salieri logo">
     <div>
@@ -17,7 +17,7 @@
   </div>
   <button style="color:#fff;display: none;" @click="faceFuncStop()">Camera Stop</button>
   <!-- 対話ページ -->
-  <div id="mainArea" v-show="pageChangeFlag">
+  <div id="mainArea">
     <div id="modelArea" class="topModelArea">
       <canvas id="canvas"></canvas>
     </div>

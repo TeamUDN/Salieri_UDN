@@ -3,7 +3,7 @@ const face = new Vue({
   // FlaskとVueを共存させるためにDelimiterを変更する
   delimiters: ["[[", "]]"],
   data: {
-    pageChangeFlag: false,
+    pageChangeFlag: true,
   },
   mounted: function () {
     this.faceFuncStart();
@@ -55,7 +55,7 @@ const face = new Vue({
             facetimeCount += 1
             NotfacetimeCount = 0;
             if (facetimeCount >= 300) {
-              self.pageChangeFlag = true
+              self.pageChangeFlag = false
             }
 
             //距離基底
@@ -80,7 +80,7 @@ const face = new Vue({
             //☆約3分人を認識しなければフラグを元に戻す
             //if (NotfacetimeCount >= 10800) {
             if (NotfacetimeCount >= 300) {//デバック用（5秒）
-              self.pageChangeFlag = false
+              self.pageChangeFlag = true
             }
 
           }
