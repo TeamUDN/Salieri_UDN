@@ -15,7 +15,7 @@
     <video id="video" width="500" height="300" autoplay playsinline="true"></video>
     <canvas id="faceCanvas" width="500" height="300"></canvas>
   </div>
-  <button style="color:#fff" @click="faceFuncStop()">Camera Stop</button>
+  <button style="color:#fff;display: none;" @click="faceFuncStop()">Camera Stop</button>
   <!-- 対話ページ -->
   <div id="mainArea" v-show="pageChangeFlag">
     <div id="modelArea" class="topModelArea">
