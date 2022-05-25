@@ -1,0 +1,58 @@
+//Enterフェーズ開始前と、Leaveフェーズ終了後のスタイル
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+
+//Enterフェーズ終了後と、Leaveフェーズ開始前のスタイル
+.v-enter-to,
+.v-leave {
+  opacity: 1;
+}
+
+//Enterフェーズ継続中と、LeaveLeaveフェーズ継続中のスタイル
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 2s;
+}
+
+#modal {
+  width: 100vw;
+  height: 100vh;
+  background-color: #331e00;
+  z-index: 10;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #modalContents {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    p {
+      width: fit-content;
+      margin: 0 auto;
+      color: #d0d0d0;
+      font-size: 1.5rem;
+    }
+    img {
+      width: 25rem;
+      margin: 0 auto;
+    }
+  }
+}
+
+.author {
+  position:fixed;
+  right:5rem;
+  bottom:5rem;
+  color: #bbbbbb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  p {
+    width: fit-content;
+  }
+}

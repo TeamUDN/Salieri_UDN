@@ -1,15 +1,56 @@
 #container {
+  display: none;
   width: fit-content;
   position: relative; // 座標指定を相対値指定にする
 }
-
 #video {
   transform: scaleX(-1); // 左右反転
 }
-
 #faceCanvas {
   transform: scaleX(-1); // 左右反転
   position: absolute; // 座標指定を絶対値指定にする
   left: 0; // X座標を0
   top: 0; // Y座標を0
+}
+
+.dialogueBase {
+  width: fit-content;
+  padding: 2rem;
+  border-radius: 20px;
+  background-color: rgba(229, 229, 229, 0.872);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  p {
+    color: #252525;
+  }
+}
+
+.selectArea {
+  position: fixed;
+  right: calc(100 / 1200 * 100vw);
+  top: calc(400 / 1200 * 100vh);
+}
+
+.messageArea {
+  position: fixed;
+  right: calc(430 / 1200 * 100vw);
+  bottom: calc(250 / 1200 * 100vh);
+}
+
+.mainAreaLogo {
+  width: 7rem;
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+}
+
+#modelArea {
+  width: fit-content;
+  margin: 0 auto;
+  canvas {
+    width: calc(100vw*(4/7));
+    height: calc(100vh);
+    border-radius: 10px;
+  }
 }

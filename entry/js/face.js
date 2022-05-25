@@ -3,16 +3,21 @@ const face = new Vue({
   // FlaskとVueを共存させるためにDelimiterを変更する
   delimiters: ["[[", "]]"],
   data: {
-    testMessage: 'Vue Test Success !!'
+    dialogueData: null,
+    choiceData: null,
+    pageChangeFlag: true,
+    dialogueCount: 4,
   },
   mounted: function () {
-    this.test();
+    axios
+      .get('./static/json/dialogue.json')
+      .then(response => { this.dialogueData = response.data.allDialogue })
+    axios
+      .get('./static/json/choice.json')
+      .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
   },
   methods: {
-    test: function () {
-      console.log(this.testMessage);
-    },
     faceFuncStart: function () {
       var video = document.getElementById("video");
       var canvas = document.getElementById("faceCanvas");
@@ -41,9 +46,9 @@ const face = new Vue({
       //☆ページ遷移用のカウントとフラグ
       var facetimeCount = 0;
       var NotfacetimeCount = 0;
-      var cameraChange = false;
 
       var self = this;
+
       this.$nextTick(() => {
         // 描画ループ
         (function drawLoop() {
@@ -59,16 +64,17 @@ const face = new Vue({
             facetimeCount += 1
             NotfacetimeCount = 0;
             if (facetimeCount >= 300) {
-              cameraChange = true
+            //if (facetimeCount >= 10800) {//デバック用（3分）
+              self.pageChangeFlag = false
             }
 
             //距離基底
             var abs_dis_x = positions[14][0] - positions[0][0];
             var abs_x = Math.round(1000 * (positions[50][0] - positions[44][0]) / abs_dis_x);
             var abs_y = Math.round(1000 * (positions[53][1] - positions[47][1]) / abs_dis_x);
-            console.log('正規化後の口角の座標');
-            console.log('相対x座標(50-44)：「' + abs_x + '」');
-            console.log('相対y座標(53-47)：「' + abs_y + '」');
+            //console.log('正規化後の口角の座標');
+            //console.log('相対x座標(50-44)：「' + abs_x + '」');
+            //console.log('相対y座標(53-47)：「' + abs_y + '」');
 
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,14 +88,16 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            if (NotfacetimeCount >= 10800) {
-              cameraChange = false
+            //if (NotfacetimeCount >= 10800) {
+            if (NotfacetimeCount >= 300) {//デバック用（5秒）
+              self.pageChangeFlag = true
             }
 
           }
         })();
       });
     },
+    /*
     faceFuncStop: function () {
       cancelAnimationFrame(this.animationFrame);
       console.log('stop!')
@@ -97,5 +105,6 @@ const face = new Vue({
       var context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
+    */
   },
 });
