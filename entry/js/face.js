@@ -64,6 +64,7 @@ const face = new Vue({
             facetimeCount += 1
             NotfacetimeCount = 0;
             if (facetimeCount >= 300) {
+            //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
             }
 

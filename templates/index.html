@@ -4,15 +4,17 @@
   <!-- トップページ -->
   <transition>
     <div id="modal" v-show="pageChangeFlag">
-      <p>Automatic Visitor Reception System</p>
-      <img src="../static/img/Salieri.png" alt="Salieri logo">
-      <div>
+      <div id="modalContents">
+        <p>Automatic Visitor Reception System</p>
+        <img src="../static/img/Salieri.png" alt="Salieri logo">
+      </div>
+      <div class="author">
         <p>Detection mode</p>
         <p>Produced by UDN</p>
       </div>
     </div>
   </transition>
-  <!-- 対話ページ（後で消すデバック用カメラ表示部分） -->
+  <!-- 顔認識用カメラ（非表示） -->
   <div id="container">
     <video id="video" width="500" height="300" autoplay playsinline="true"></video>
     <canvas id="faceCanvas" width="500" height="300"></canvas>
