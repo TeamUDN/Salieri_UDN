@@ -22,8 +22,13 @@
       <canvas id="canvas"></canvas>
     </div>
     <!-- select area -->
-    <div>
-      <p>ここに選択肢などを表示</p>
+    <div v-if="dialogueData && choiceData && dialogueData[dialogueCount].dialogueName === 'hello'">
+      <p v-for="count in choiceData[0].choice.length">[[ choiceData[0].choice[count - 1] ]]
+      </p>
+    </div>
+    <div v-if="dialogueData && choiceData && dialogueData[dialogueCount].dialogueName === 'aboutMe'">
+      <p v-for="count in choiceData[1].choice.length">[[ choiceData[1].choice[count - 1] ]]
+      </p>
     </div>
     <!-- message area -->
     <div  v-if="dialogueData">

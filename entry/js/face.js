@@ -6,7 +6,7 @@ const face = new Vue({
     dialogueData: null,
     choiceData: null,
     pageChangeFlag: true,
-    dialogueCount: 0,
+    dialogueCount: 4,
   },
   mounted: function () {
     axios
@@ -14,7 +14,7 @@ const face = new Vue({
       .then(response => { this.dialogueData = response.data.allDialogue })
     axios
       .get('./static/json/choice.json')
-      .then(response => { this.choiceData = response.data })
+      .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
   },
   methods: {
