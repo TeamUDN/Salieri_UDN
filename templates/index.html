@@ -2,14 +2,16 @@
 
 <div id="face">
   <!-- トップページ -->
-  <div id="modal" v-show="pageChangeFlag">
-    <p>Automatic Visitor Reception System</p>
-    <img src="../static/img/Salieri.png" alt="Salieri logo">
-    <div>
-      <p>Detection mode</p>
-      <p>Produced by UDN</p>
+  <transition>
+    <div id="modal" v-show="pageChangeFlag">
+      <p>Automatic Visitor Reception System</p>
+      <img src="../static/img/Salieri.png" alt="Salieri logo">
+      <div>
+        <p>Detection mode</p>
+        <p>Produced by UDN</p>
+      </div>
     </div>
-  </div>
+  </transition>
   <!-- 対話ページ（後で消すデバック用カメラ表示部分） -->
   <div id="container">
     <video id="video" width="500" height="300" autoplay playsinline="true"></video>
