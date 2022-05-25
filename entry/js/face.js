@@ -3,9 +3,18 @@ const face = new Vue({
   // FlaskとVueを共存させるためにDelimiterを変更する
   delimiters: ["[[", "]]"],
   data: {
+    dialogueData: null,
+    choiceData: null,
     pageChangeFlag: true,
+    dialogueCount: 0,
   },
   mounted: function () {
+    axios
+      .get('./static/json/dialogue.json')
+      .then(response => { this.dialogueData = response.data.allDialogue })
+    axios
+      .get('./static/json/choice.json')
+      .then(response => { this.choiceData = response.data })
     this.faceFuncStart();
   },
   methods: {
