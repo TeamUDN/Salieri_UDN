@@ -5,7 +5,7 @@ const face = new Vue({
   data: {
     dialogueData: null,
     choiceData: null,
-    pageChangeFlag: true,
+    pageChangeFlag: false, 
     dialogueCount: 4,
   },
   mounted: function () {

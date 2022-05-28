@@ -41,8 +41,8 @@ window.addEventListener("DOMContentLoaded", () => {
         0.1,
         1000,
     )
-    camera.position.set(0, 1, 3)
-    camera.lookAt(0, 0.85, 0)
+    camera.position.set(0, 1, 1.8)
+    camera.lookAt(0, 1.1, 0)
 
     // VRMの読み込み
     var boneNode: any = []
