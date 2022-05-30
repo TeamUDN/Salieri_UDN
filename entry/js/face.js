@@ -105,14 +105,25 @@ const face = new Vue({
       this.recognition = new webkitSpeechRecognition();
       this.recognition.lang = "ja-JP";
       this.recognition.start();
-      this.recognition.onend = function (e) {
+      this.recognition.onend = function (e) { // 認識終了時
         console.log(e);
       }
-      this.recognition.onresult = function (e) {
+      this.recognition.onresult = function (e) { 
         console.log(e);
         if(e.results.length > 0){
           this.getMessage = e.results[0][0].transcript;
           console.log(this.getMessage);
+          // ajax通信
+          axios.post('/chat', {
+            chatMessage: this.getMessage
+          })
+          .then(response => { // 成功
+            var res = JSON.parse(response.data.values);
+            console.log(res.message);
+          })
+          .catch(function (error) { // 失敗
+            console.log(error);
+          });
         }
       }
     },
