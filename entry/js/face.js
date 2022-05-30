@@ -5,8 +5,10 @@ const face = new Vue({
   data: {
     dialogueData: null,
     choiceData: null,
-    pageChangeFlag: true, 
+    pageChangeFlag: true,
     dialogueCount: 4,
+    getMessage: "",
+    recognition: null,
   },
   mounted: function () {
     axios
@@ -16,6 +18,7 @@ const face = new Vue({
       .get('./static/json/choice.json')
       .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
+    this.webSpeechAPI();
   },
   methods: {
     faceFuncStart: function () {
@@ -62,7 +65,7 @@ const face = new Vue({
 
             //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
             facetimeCount += 1
-            console.log(facetimeCount);
+            //console.log(facetimeCount);
             NotfacetimeCount = 0;
             if (facetimeCount >= 40) {
             //if (facetimeCount >= 10800) {//デバック用（3分）
@@ -81,7 +84,7 @@ const face = new Vue({
             // canvas にトラッキング結果を描画
             tracker.draw(canvas);
           } else {
-            console.log('未検出');
+            //console.log('未検出');
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -97,6 +100,21 @@ const face = new Vue({
           }
         })();
       });
+    },
+    webSpeechAPI: function () {
+      this.recognition = new webkitSpeechRecognition();
+      this.recognition.lang = "ja-JP";
+      this.recognition.start();
+      this.recognition.onend = function (e) {
+        console.log(e);
+      }
+      this.recognition.onresult = function (e) {
+        console.log(e);
+        if(e.results.length > 0){
+          this.getMessage = e.results[0][0].transcript;
+          console.log(this.getMessage);
+        }
+      }
     },
     /*
     faceFuncStop: function () {
