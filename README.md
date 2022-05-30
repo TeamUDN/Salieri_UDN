@@ -1,6 +1,15 @@
 # Salieri_UDN
 
 
+## 環境構築(venv)
+```
+python -m venv .venv
+
+#環境に入る(Windowsの場合)
+./.venv/Scripts/activate
+#環境に入る(Macの場合)
+source .venv/bin/activate
+```
 ## 環境構築(Anaconda)
 パッケージのインストール
 ```

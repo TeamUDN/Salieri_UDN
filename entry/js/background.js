@@ -1,6 +1,6 @@
 bubbly({
-  colorStart: '#331e00',
-  colorStop: '#331e00',
+  colorStart: '#171616',
+  colorStop: '#474242',
   blur: 5,
   bubbles: 80,
   velocityFunc: () => Math.random() * 2.5,
