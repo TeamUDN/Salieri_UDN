@@ -62,8 +62,9 @@ const face = new Vue({
 
             //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
             facetimeCount += 1
+            console.log(facetimeCount);
             NotfacetimeCount = 0;
-            if (facetimeCount >= 300) {
+            if (facetimeCount >= 40) {
             //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
             }
@@ -72,7 +73,6 @@ const face = new Vue({
             var abs_dis_x = positions[14][0] - positions[0][0];
             var abs_x = Math.round(1000 * (positions[50][0] - positions[44][0]) / abs_dis_x);
             var abs_y = Math.round(1000 * (positions[53][1] - positions[47][1]) / abs_dis_x);
-            //console.log('正規化後の口角の座標');
             //console.log('相対x座標(50-44)：「' + abs_x + '」');
             //console.log('相対y座標(53-47)：「' + abs_y + '」');
 
@@ -81,6 +81,7 @@ const face = new Vue({
             // canvas にトラッキング結果を描画
             tracker.draw(canvas);
           } else {
+            console.log('未検出');
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -88,8 +89,8 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            //if (NotfacetimeCount >= 10800) {
-            if (NotfacetimeCount >= 300) {//デバック用（5秒）
+            if (NotfacetimeCount >= 10800) {
+            //if (NotfacetimeCount >= 300) {//デバック用（5秒）
               self.pageChangeFlag = true
             }
 
