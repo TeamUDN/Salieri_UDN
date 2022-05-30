@@ -1,12 +1,24 @@
-from flask import Flask, render_template
-
-
+from flask import Flask, render_template, jsonify, request, session, send_from_directory
+import json
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# /showにPOSTリクエストが送られたら処理してJSONを返す
+@app.route('/chat', methods=['POST'])
+def show():
+
+    txt=request.form['chatMessage']
+
+    return_json = {
+        "message": txt + "おけまる",
+        "choose": ["hoge","fuga"]
+    }
+
+    return jsonify(values=json.dumps(return_json))
 
   
 if __name__ == '__main__':
