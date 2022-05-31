@@ -40,6 +40,8 @@
     img {
       width: 25rem;
       margin: 0 auto;
+      animation: rotate_anime 4s;
+      animation-iteration-count: infinite;
     }
   }
 }
@@ -54,5 +56,19 @@
   gap: 0.5rem;
   p {
     width: fit-content;
+  }
+}
+
+@keyframes rotate_anime {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  20% {
+    transform: rotateY(410deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
   }
 }
