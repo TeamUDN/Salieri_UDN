@@ -5,8 +5,12 @@ const face = new Vue({
   data: {
     dialogueData: null,
     choiceData: null,
-    pageChangeFlag: true, 
+    pageChangeFlag: true,
     dialogueCount: 4,
+    getMessage: "",
+    recognition: null,
+    recordingStartFlagCount: 0,
+    debugFlg: '',
   },
   mounted: function () {
     axios
@@ -16,6 +20,7 @@ const face = new Vue({
       .get('./static/json/choice.json')
       .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
+    this.webSpeechAPI();
   },
   methods: {
     faceFuncStart: function () {
@@ -62,7 +67,8 @@ const face = new Vue({
 
             //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
             facetimeCount += 1
-            console.log(facetimeCount);
+            //console.log(facetimeCount);
+            self.debugFlg = '○'; // 認識時（デバック用）
             NotfacetimeCount = 0;
             if (facetimeCount >= 40) {
             //if (facetimeCount >= 10800) {//デバック用（3分）
@@ -81,7 +87,8 @@ const face = new Vue({
             // canvas にトラッキング結果を描画
             tracker.draw(canvas);
           } else {
-            console.log('未検出');
+            //console.log('未検出');
+            self.debugFlg = 'x'; // 未認識時（デバック用）
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -98,6 +105,41 @@ const face = new Vue({
         })();
       });
     },
+    webSpeechAPI: function () {
+      var self = this;
+      self.recognition = new webkitSpeechRecognition();
+      self.recognition.lang = "ja-JP";
+      self.recognition.start(); // 認識開始
+
+      self.recognition.onerror = function () {
+        console.log('認識できませんでした');
+        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+        self.recordingStartFlagCount++;
+      }
+
+      self.recognition.onresult = function (e) { // 音声認識時
+        if (e.results.length > 0) {
+          // 音声認識で取得した文章をgetMessageに代入
+          self.getMessage = e.results[0][0].transcript;
+          console.log(self.getMessage);
+          // ajax通信
+          axios.post('/chat', {
+            chatMessage: self.getMessage
+          })
+          .then(response => { // 成功
+            var res = JSON.parse(response.data.values);
+            console.log(res.message);
+            // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+            self.recordingStartFlagCount++;
+          })
+          .catch(function (error) { // 失敗
+            console.log(error);
+            // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+            self.recordingStartFlagCount++;
+          });
+        }
+      }
+    },
     /*
     faceFuncStop: function () {
       cancelAnimationFrame(this.animationFrame);
@@ -108,4 +150,10 @@ const face = new Vue({
     }
     */
   },
+  watch: {
+    recordingStartFlagCount: function () {
+      // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+      this.webSpeechAPI();
+    }
+  }
 });
