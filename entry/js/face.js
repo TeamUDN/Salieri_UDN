@@ -10,7 +10,6 @@ const face = new Vue({
     getMessage: "",
     recognition: null,
     recordingStartFlagCount: 0,
-    getMsgFlg: false,
   },
   mounted: function () {
     axios
@@ -108,16 +107,14 @@ const face = new Vue({
       self.recognition = new webkitSpeechRecognition();
       self.recognition.lang = "ja-JP";
       self.recognition.start(); // 認識開始
-      self.recognition.onend = function () { // 認識終了時
-        // 音声が認識されなかったとき
-        if (self.getMsgFlg === false) {
-          console.log('認識できませんでした');
-          // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-          self.recordingStartFlagCount++;
-        }
+
+      self.recognition.onerror = function () {
+        console.log('認識できませんでした');
+        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+        self.recordingStartFlagCount++;
       }
+
       self.recognition.onresult = function (e) { // 音声認識時
-        self.getMsgFlg = true;
         if (e.results.length > 0) {
           // 音声認識で取得した文章をgetMessageに代入
           self.getMessage = e.results[0][0].transcript;
@@ -130,7 +127,6 @@ const face = new Vue({
             var res = JSON.parse(response.data.values);
             console.log(res.message);
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            self.getMsgFlg = false;
             self.recordingStartFlagCount++;
           })
           .catch(function (error) { // 失敗
