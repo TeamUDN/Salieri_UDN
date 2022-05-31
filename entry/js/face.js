@@ -10,6 +10,7 @@ const face = new Vue({
     getMessage: "",
     recognition: null,
     recordingStartFlagCount: 0,
+    debugFlg: '',
   },
   mounted: function () {
     axios
@@ -67,6 +68,7 @@ const face = new Vue({
             //☆顔認識した経過時間を1フレーム追加 300フレーム(約5秒)以上ならフラグを変更
             facetimeCount += 1
             //console.log(facetimeCount);
+            self.debugFlg = '○'; // 認識時（デバック用）
             NotfacetimeCount = 0;
             if (facetimeCount >= 40) {
             //if (facetimeCount >= 10800) {//デバック用（3分）
@@ -86,6 +88,7 @@ const face = new Vue({
             tracker.draw(canvas);
           } else {
             //console.log('未検出');
+            self.debugFlg = 'x'; // 未認識時（デバック用）
             // canvas をクリア
             context.clearRect(0, 0, canvas.width, canvas.height);
 
