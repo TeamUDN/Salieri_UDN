@@ -43,6 +43,8 @@
   position: fixed;
   right: 3rem;
   bottom: 3rem;
+  animation: rotate_anime 4s;
+  animation-iteration-count: infinite;
 }
 
 #modelArea {
