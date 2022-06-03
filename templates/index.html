@@ -39,8 +39,10 @@
       </p>
     </div>
     <!-- message area -->
-    <div class="dialogueBase messageArea"  v-if="dialogueData">
-      <p v-for="count in dialogueData[dialogueCount].dialogue.length">[[ dialogueData[dialogueCount].dialogue[count - 1] ]]</p>
+    <div class="dialogueBase messageArea">
+      <!--<p v-for="count in dialogueData[dialogueCount].dialogue.length">[[ dialogueData[dialogueCount].dialogue[count - 1] ]]</p>-->
+      <p>[[ getMessage ]]</p>
+      <p>[[ modelMessage ]]</p>
     </div>
     <img class="mainAreaLogo" src="../static/img/Salieri.png" alt="Salieri logo">
   </div>

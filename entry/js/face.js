@@ -13,6 +13,7 @@ const face = new Vue({
     recognition: null,
     recordingStartFlagCount: 0,
     debugFlg: '',
+    modelMessage: 'いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
   },
   mounted: function () {
     axios
@@ -131,8 +132,9 @@ const face = new Vue({
           .then(response => { // 成功
             var res = JSON.parse(response.data.values);
             console.log(res.message);
-            this.pose = res.pose;
-            this.model = res.model;
+            self.modelMessage = res.message;
+            self.pose = res.pose;
+            self.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
             self.recordingStartFlagCount++;
           })
