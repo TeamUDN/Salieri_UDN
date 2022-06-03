@@ -20,11 +20,7 @@ def show():
     flag=session["flag"]
     txt=request.json['chatMessage']
     model=session["model"]
-<<<<<<< HEAD
-
-=======
     
->>>>>>> e81479989a53f40b28a3b6347110b7dac35275ea
     res,choose,flag,model=responce(txt,flag,model)
 
     session["flag"]=flag
