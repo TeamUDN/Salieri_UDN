@@ -1,5 +1,5 @@
 
-from gen_img.gen_img import generate
+#from gen_img.gen_img import generate
 from googletrans import Translator
 from chat import chat2
 
@@ -48,7 +48,7 @@ def responce(text,flag):
 
         tr = Translator()
         tr=tr.translate(text=text, src="ja", dest="en").text
-        generate(tr)
+        #generate(tr)
         flag=0
 
     if flag==2:
