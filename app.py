@@ -10,6 +10,7 @@ app.secret_key = 'secret'
 @app.route('/')
 def index():
     session["flag"]=0
+    session["model"]="Salieri"
 
     return render_template('index.html')
 
@@ -18,13 +19,18 @@ def index():
 def show():
     flag=session["flag"]
     txt=request.json['chatMessage']
-    res,choose,flag=responce(txt,flag)
+    model=session["model"]
+    
+    res,choose,flag,model=responce(txt,flag,model)
 
     session["flag"]=flag
+    session["model"]=model
 
     return_json = {
         "message": res,
-        "choose": choose
+        "choose": choose,
+        "pose": "hoge",
+        "model": model
     }
 
     return jsonify(values=json.dumps(return_json))
