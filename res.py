@@ -1,9 +1,10 @@
 
+from joblib import MemorizedResult
 from gen_img.gen_img import generate
 from googletrans import Translator
 from chat import chat2
 
-def responce(text,flag):
+def responce(text,flag,model):
     res=text
     choose=[]
 
@@ -27,20 +28,27 @@ def responce(text,flag):
     if text=="人の画像を生成":
         flag=1
         res="どんな人を生成しますか"
-        return res,choose,flag
+        return res,choose,flag,model
 
     if text=="会話モードを開始":
         flag=2
         res="会話モードに移行します"
-        return res,choose,flag
+        return res,choose,flag,model
     
     if text=="会話モードを終了":
         if flag!=2:
             res="会話モードはまだ開始していません。"
-            return res,choose,flag
+            return res,choose,flag,model
         else:
             flag=0
             res="会話モードを終了します。"
+
+    if text=="先輩":
+        res="こんにちは"
+        model="kurisu"
+        return res,choose,flag,model
+        
+
     
 
     if flag==1:
@@ -55,6 +63,6 @@ def responce(text,flag):
         res=chat2(text)
 
 
-    return res,choose,flag
+    return res,choose,flag,model
         
 
