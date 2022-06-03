@@ -8,21 +8,27 @@ def responce(text,flag):
     choose=[]
 
     if text=="こんにちは":
-        res="こんにちは!　東京電機大学、人工知能研究室へようこそ。   どんなことを知りたいですか？以下の3つの中のどれかを読み上げて下さい。"
+        f = open('txt/op.txt', 'r',encoding='UTF-8')
+        res = f.read()
         choose=['・東京電機大学について','・人工知能研究室について','・私について']
 
     if text=='東京電機大学について':
-        res="東京電機大学は山の上にあります"
+        f = open('txt/tdu.txt', 'r',encoding='UTF-8')
+        res = f.read()
         
 
-    if text=='人工知能研究室について':
-        res="人工知能研究室は山の上にあります"
+    if text=='人工知能 研究室について':
+        f = open('txt/ailab.txt', 'r',encoding='UTF-8')
+        res = f.read()
         
         
     if text=='私について':
         res="私はこんなことができます"
         choose=['・会話モードを開始：　AIと雑談することができます。','・会話モードを終了：　会話モードを終了します。'
         ,'・人の画像を生成　：　指定した特徴の顔画像を生成します。','・ありがとう　　　：　案内を終了します。']
+    
+    if text=='ぬるぽ':
+        res="ガッ"
 
     if text=="人の画像を生成":
         flag=1
