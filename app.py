@@ -21,7 +21,7 @@ def show():
     txt=request.json['chatMessage']
     model=session["model"]
     
-    res,choose,flag,model=responce(txt,flag)
+    res,choose,flag,model=responce(txt,flag,model)
 
     session["flag"]=flag
     session["model"]=model
