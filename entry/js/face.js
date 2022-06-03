@@ -3,6 +3,8 @@ const face = new Vue({
   // FlaskとVueを共存させるためにDelimiterを変更する
   delimiters: ["[[", "]]"],
   data: {
+    pose: 'hellovrm',
+    model: 'salieri',
     dialogueData: null,
     choiceData: null,
     pageChangeFlag: true,
@@ -129,6 +131,8 @@ const face = new Vue({
           .then(response => { // 成功
             var res = JSON.parse(response.data.values);
             console.log(res.message);
+            this.pose = res.pose;
+            this.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
             self.recordingStartFlagCount++;
           })

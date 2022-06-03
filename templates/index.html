@@ -1,6 +1,8 @@
 {% extends "layout.html" %}{% block content %}
 
 <div id="face">
+  <input type="text" id="vuePose" v-model="pose" style="display: none;"></input>
+  <input type="text" id="vueModel" v-model="model" style="display: none;"></input>
   <!-- トップページ -->
   <transition>
     <div id="modal" v-show="pageChangeFlag">
