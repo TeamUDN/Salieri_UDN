@@ -5,8 +5,6 @@ const face = new Vue({
   data: {
     pose: 'hellovrm',
     model: 'salieri',
-    dialogueData: null,
-    choiceData: null,
     pageChangeFlag: true,
     dialogueCount: 4,
     getMessage: "",
@@ -17,12 +15,6 @@ const face = new Vue({
     choiceArr: [],
   },
   mounted: function () {
-    axios
-      .get('./static/json/dialogue.json')
-      .then(response => { this.dialogueData = response.data.allDialogue })
-    axios
-      .get('./static/json/choice.json')
-      .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
     this.webSpeechAPI();
   },
