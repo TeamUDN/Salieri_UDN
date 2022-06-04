@@ -33,8 +33,9 @@
 }
 
 .messageArea {
+  width: 75vw;
   position: fixed;
-  right: calc(430 / 1200 * 100vw);
+  right: calc(150 / 1200 * 100vw);
   bottom: calc(250 / 1200 * 100vh);
 }
 

@@ -5,22 +5,16 @@ const face = new Vue({
   data: {
     pose: 'hellovrm',
     model: 'salieri',
-    dialogueData: null,
-    choiceData: null,
     pageChangeFlag: true,
     dialogueCount: 4,
     getMessage: "",
     recognition: null,
     recordingStartFlagCount: 0,
     debugFlg: '',
+    modelMessage: 'いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
+    choiceArr: [],
   },
   mounted: function () {
-    axios
-      .get('./static/json/dialogue.json')
-      .then(response => { this.dialogueData = response.data.allDialogue })
-    axios
-      .get('./static/json/choice.json')
-      .then(response => { this.choiceData = response.data.allChoice })
     this.faceFuncStart();
     this.webSpeechAPI();
   },
@@ -131,8 +125,14 @@ const face = new Vue({
           .then(response => { // 成功
             var res = JSON.parse(response.data.values);
             console.log(res.message);
-            this.pose = res.pose;
-            this.model = res.model;
+            if (res.choose.length !== 0) {
+              self.choiceArr = res.choose;
+            } else {
+              self.choiceArr = [];
+            }
+            self.modelMessage = res.message;
+            self.pose = res.pose;
+            self.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
             self.recordingStartFlagCount++;
           })
@@ -155,7 +155,8 @@ const face = new Vue({
     */
   },
   watch: {
-    recordingStartFlagCount: function () {
+    recordingStartFlagCount: function (count) {
+      console.log(count);
       // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
       this.webSpeechAPI();
     }
