@@ -127,6 +127,8 @@ const face = new Vue({
             console.log(res.message);
             if (res.choose.length !== 0) {
               self.choiceArr = res.choose;
+            } else {
+              self.choiceArr = [];
             }
             self.modelMessage = res.message;
             self.pose = res.pose;
@@ -153,7 +155,8 @@ const face = new Vue({
     */
   },
   watch: {
-    recordingStartFlagCount: function () {
+    recordingStartFlagCount: function (count) {
+      console.log(count);
       // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
       this.webSpeechAPI();
     }
