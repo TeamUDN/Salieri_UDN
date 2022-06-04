@@ -14,6 +14,7 @@ const face = new Vue({
     recordingStartFlagCount: 0,
     debugFlg: '',
     modelMessage: 'いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
+    choiceArr: [],
   },
   mounted: function () {
     axios
@@ -132,6 +133,9 @@ const face = new Vue({
           .then(response => { // 成功
             var res = JSON.parse(response.data.values);
             console.log(res.message);
+            if (res.choose.length !== 0) {
+              self.choiceArr = res.choose;
+            }
             self.modelMessage = res.message;
             self.pose = res.pose;
             self.model = res.model;
