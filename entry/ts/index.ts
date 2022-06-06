@@ -9,9 +9,16 @@ window.addEventListener("DOMContentLoaded", () => {
     // canvasの取得
     var canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
-    // model_pathの取得
+    // modelpathのリスト
     var modelPass = '../static/base_model/Salieri.vrm';
-    var pose_hello = '../static/pose/hellovrm.csv';
+    const modelSarieli = '../static/base_model/Salieri.vrm';
+    const modelKurisu = '../static/base_model/kurisu.vrm';
+
+    //posepathのリスト
+    var posepass = '../static/pose/hellovrm.csv';
+    const pose_hello = '../static/pose/hellovrm.csv';
+    const pose_ozigi = '../static/pose/ozigi.csv';
+    const pose_suneru = '../static/pose/suneru.csv';
 
     // シーンの設定
     const scene = new THREE.Scene()
@@ -62,17 +69,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     makeAnimation(pose_hello);
                 })
             }
-            /*
-            ,
-            (progress) => {
-                //console.log('Loading model...', Math.round(100.0 * (progress.loaded / progress.total)), '%');
-                const progressNum = <HTMLInputElement>document.getElementById('progressNum');
-                progressNum.innerHTML = String(Math.round(100.0 * (progress.loaded / progress.total)) + '%');
-                const progressBarFull = <HTMLInputElement>document.getElementById('progressBarFull');
-                progressBarFull.style.width = Math.round(100.0 * (progress.loaded / progress.total)) + '%';
-                if ((Math.round(100.0 * (progress.loaded / progress.total))) == 100) { (<HTMLInputElement>document.getElementById('loading')).style.display = 'none' }
-            },
-            (error) => console.error(error)*/
         )
     }
 
@@ -157,16 +153,55 @@ window.addEventListener("DOMContentLoaded", () => {
         action.play()
     }
 
-    //消えないように変数宣言
+    //変数宣言
     let lastTime = (new Date()).getTime()
+    let currentPose = "";
+    let currentModel = "";
+    let newPose = <HTMLInputElement>document.getElementById('vuePose');
+    let newModel = <HTMLInputElement>document.getElementById('vueModel');
 
-    // フレーム毎に呼ばれる
+    console.log(scene.children);
+    // フレーム毎に呼ばれる関数
     const update = () => {
         requestAnimationFrame(update)
 
         // 時間計測
         let time = (new Date()).getTime()
         let delta = time - lastTime;
+
+        //html側から変数が代入されていると分岐
+        if (currentPose != String(newPose.value) || currentModel != String(newModel.value)) {
+            //if (Number(step.value) != 0) {
+            //console.log("step.value" + step.value)
+            //stepValue = Number(step.value);
+            //console.log("stepValue" + stepValue)
+            //顔を一度リセットする
+            //if (mixer != null) { resetFaceNode(faceNode) }
+            console.log(String(newPose.value));
+            if (String(newPose.value) == "doya") {
+                console.log("doyaに変更")
+                posepass = pose_ozigi
+                faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0.48)
+                faceNode.setValue(VRMSchema.BlendShapePresetName.E, 1.0)
+                faceNode.update()
+                makeAnimation(posepass)
+            }
+
+            console.log(String(newModel.value));
+            if (String(newModel.value) == "kurisu") {
+                scene.remove.apply(scene, scene.children);
+                console.log("kurisuに交代")
+                modelPass = modelKurisu;
+                newLoad()
+                sceneOption()
+                    camera.position.set(0, 1, 1.8)
+                    camera.lookAt(0, 1.2, 0)
+            }
+            //if (mixer != undefined) { makeAnimation(posepass) }
+            //(<HTMLInputElement>document.getElementById('vuePose')).value = 'doya';
+            currentPose = String(newPose.value)
+            currentModel = String(newModel.value)
+        }
 
         // アニメーションの定期処理
         if (mixer) {
