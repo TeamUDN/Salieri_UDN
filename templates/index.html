@@ -30,17 +30,15 @@
       <canvas id="canvas"></canvas>
     </div>
     <!-- select area -->
-    <div class="dialogueBase selectArea" v-if="dialogueData && choiceData && dialogueData[dialogueCount].dialogueName === 'hello'">
-      <p v-for="count in choiceData[0].choice.length">・[[ choiceData[0].choice[count - 1] ]]
-      </p>
-    </div>
-    <div class="dialogueBase selectArea" v-if="dialogueData && choiceData && dialogueData[dialogueCount].dialogueName === 'aboutMe'">
-      <p v-for="count in choiceData[1].choice.length">[[ choiceData[1].choice[count - 1] ]]
+    <div class="dialogueBase selectArea"
+      v-if="choiceArr.length !== 0">
+      <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
       </p>
     </div>
     <!-- message area -->
-    <div class="dialogueBase messageArea"  v-if="dialogueData">
-      <p v-for="count in dialogueData[dialogueCount].dialogue.length">[[ dialogueData[dialogueCount].dialogue[count - 1] ]]</p>
+    <div class="dialogueBase messageArea">
+      <p>入力音声: [[ getMessage ]]</p>
+      <p>[[ modelMessage ]]</p>
     </div>
     <img class="mainAreaLogo" src="../static/img/Salieri.png" alt="Salieri logo">
   </div>
