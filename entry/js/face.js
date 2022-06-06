@@ -11,7 +11,7 @@ const face = new Vue({
     recognition: null,
     recordingStartFlagCount: 0,
     debugFlg: '',
-    modelMessage: 'いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
+    modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
     choiceArr: [],
   },
   mounted: function () {
