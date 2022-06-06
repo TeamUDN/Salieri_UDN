@@ -1,7 +1,10 @@
 import os
 import openai
+f = open('api.txt', 'r',encoding='UTF-8')
+api = f.read()
 
-openai.api_key = "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"
+
+openai.api_key = api
 
 start_sequence = "\nサリエリ:"
 restart_sequence = "\n人間: "
