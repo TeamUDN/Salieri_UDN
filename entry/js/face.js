@@ -157,8 +157,10 @@ const face = new Vue({
     speech: function (res) {
       var synth = window.speechSynthesis;
       var voices = [];
+      
       if ( speechSynthesis.onvoiceschanged !== undefined ) {
         // Chromeではonvoiceschangedというイベントがあり、onvoiceschangedが呼ばれたタイミングでないと音声を取得できない
+        
         speechSynthesis.onvoiceschanged  = function (){
           voices = synth.getVoices();
           // 読み上げ
@@ -167,6 +169,7 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
+          
         };
       } else {
         // Firefoxではこれで音声が読み込める
