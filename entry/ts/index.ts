@@ -160,7 +160,6 @@ window.addEventListener("DOMContentLoaded", () => {
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
 
-    console.log(scene.children);
     // フレーム毎に呼ばれる関数
     const update = () => {
         requestAnimationFrame(update)
@@ -171,34 +170,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
         //html側から変数が代入されていると分岐
         if (currentPose != String(newPose.value) || currentModel != String(newModel.value)) {
-            //if (Number(step.value) != 0) {
-            //console.log("step.value" + step.value)
-            //stepValue = Number(step.value);
-            //console.log("stepValue" + stepValue)
-            //顔を一度リセットする
-            //if (mixer != null) { resetFaceNode(faceNode) }
-            console.log(String(newPose.value));
+            //モデルの変更
+            if (String(newModel.value) == "kurisu" && currentModel !== "kurisu") {
+                scene.remove.apply(scene, scene.children);
+                modelPass = modelKurisu;
+                newLoad()
+                sceneOption()
+                camera.lookAt(0, 1.2, 0)
+            }
+
+            //ポーズの変更
             if (String(newPose.value) == "doya") {
-                console.log("doyaに変更")
-                posepass = pose_ozigi
+                posepass = pose_suneru
                 faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0.48)
                 faceNode.setValue(VRMSchema.BlendShapePresetName.E, 1.0)
                 faceNode.update()
                 makeAnimation(posepass)
             }
-
-            console.log(String(newModel.value));
-            if (String(newModel.value) == "kurisu") {
-                scene.remove.apply(scene, scene.children);
-                console.log("kurisuに交代")
-                modelPass = modelKurisu;
-                newLoad()
-                sceneOption()
-                    camera.position.set(0, 1, 1.8)
-                    camera.lookAt(0, 1.2, 0)
-            }
-            //if (mixer != undefined) { makeAnimation(posepass) }
-            //(<HTMLInputElement>document.getElementById('vuePose')).value = 'doya';
             currentPose = String(newPose.value)
             currentModel = String(newModel.value)
         }
