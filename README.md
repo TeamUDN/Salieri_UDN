@@ -17,7 +17,7 @@ conda env create -n Salieri -f Salieri.yml
 conda activate Salieri
 pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 pip install git+https://github.com/openai/CLIP.git
-pip install flask gunicorn 
+pip install flask gunicorn openai
 ```
 
 ビルド
