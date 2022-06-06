@@ -131,6 +131,7 @@ const face = new Vue({
               self.choiceArr = [];
             }
             self.modelMessage = res.message;
+            self.speech(res.message);
             self.pose = res.pose;
             self.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
@@ -153,7 +154,7 @@ const face = new Vue({
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
     */
-    speech: function () {
+    speech: function (res) {
       var synth = window.speechSynthesis;
       var voices = [];
       if ( speechSynthesis.onvoiceschanged !== undefined ) {
@@ -162,7 +163,7 @@ const face = new Vue({
           voices = synth.getVoices();
           // 読み上げ
           var speak = new SpeechSynthesisUtterance();
-          speak.text = 'こんにちは';
+          speak.text = res;
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
@@ -172,7 +173,7 @@ const face = new Vue({
           voices = synth.getVoices();
           // 読み上げ
           var speak = new SpeechSynthesisUtterance();
-          speak.text = 'こんにちは';
+          speak.text = res;
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
