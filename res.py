@@ -51,7 +51,7 @@ def responce(text,flag,model):
             res="会話モードを終了します。"
 
     if text=="先輩":
-        res="こんにちは"
+        res="こんにちは紅莉栖"
         model="kurisu"
         return res,choose,flag,model
         
