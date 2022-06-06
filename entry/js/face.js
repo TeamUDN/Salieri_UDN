@@ -154,12 +154,29 @@ const face = new Vue({
     }
     */
     speech: function () {
-      // 読み上げ
-      var speak = new SpeechSynthesisUtterance();
-      speak.text = 'こんにちは';
-      speak.lang = "ja-JP";
-      speak.voice = speechSynthesis.getVoices();
-      speechSynthesis.speak(speak);
+      var synth = window.speechSynthesis;
+      var voices = [];
+      if ( speechSynthesis.onvoiceschanged !== undefined ) {
+        // Chromeではonvoiceschangedというイベントがあり、onvoiceschangedが呼ばれたタイミングでないと音声を取得できない
+        speechSynthesis.onvoiceschanged  = function (){
+          voices = synth.getVoices();
+          // 読み上げ
+          var speak = new SpeechSynthesisUtterance();
+          speak.text = 'こんにちは';
+          speak.lang = "ja-JP";
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speechSynthesis.speak(speak);
+        };
+      } else {
+        // Firefoxではこれで音声が読み込める
+          voices = synth.getVoices();
+          // 読み上げ
+          var speak = new SpeechSynthesisUtterance();
+          speak.text = 'こんにちは';
+          speak.lang = "ja-JP";
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speechSynthesis.speak(speak);
+      }
     }
   },
   watch: {
