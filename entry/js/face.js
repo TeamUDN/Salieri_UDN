@@ -113,7 +113,7 @@ const face = new Vue({
         self.recordingStartFlagCount++;
       }
 
-      self.recognition.onresult = function (e) { // 音声認識時
+      self.recognition.onresult =  function (e) { // 音声認識時
         if (e.results.length > 0) {
           // 音声認識で取得した文章をgetMessageに代入
           self.getMessage = e.results[0][0].transcript;
@@ -153,6 +153,14 @@ const face = new Vue({
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
     */
+    speech: function () {
+      // 読み上げ
+      var speak = new SpeechSynthesisUtterance();
+      speak.text = 'こんにちは';
+      speak.lang = "ja-JP";
+      speak.voice = speechSynthesis.getVoices();
+      speechSynthesis.speak(speak);
+    }
   },
   watch: {
     recordingStartFlagCount: function (count) {
