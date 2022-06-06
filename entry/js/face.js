@@ -113,7 +113,7 @@ const face = new Vue({
         self.recordingStartFlagCount++;
       }
 
-      self.recognition.onresult = function (e) { // 音声認識時
+      self.recognition.onresult =  function (e) { // 音声認識時
         if (e.results.length > 0) {
           // 音声認識で取得した文章をgetMessageに代入
           self.getMessage = e.results[0][0].transcript;
@@ -131,6 +131,7 @@ const face = new Vue({
               self.choiceArr = [];
             }
             self.modelMessage = res.message;
+            self.speech(res.message);
             self.pose = res.pose;
             self.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
@@ -153,6 +154,41 @@ const face = new Vue({
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
     */
+    speech: function (res) {
+      var synth = window.speechSynthesis;
+      var voices = [];
+      if ( speechSynthesis.onvoiceschanged !== undefined ) {
+        // Chromeではonvoiceschangedというイベントがあり、onvoiceschangedが呼ばれたタイミングでないと音声を取得できない
+        if (window.speechSynthesis.onvoiceschanged == null) {
+          speechSynthesis.onvoiceschanged = function () {
+            voices = synth.getVoices();
+            // 読み上げ
+            var speak = new SpeechSynthesisUtterance();
+            speak.text = res;
+            speak.lang = "ja-JP";
+            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+            speechSynthesis.speak(speak);
+          };
+        } else {
+          voices = synth.getVoices();
+          // 読み上げ
+          var speak = new SpeechSynthesisUtterance();
+          speak.text = res;
+          speak.lang = "ja-JP";
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speechSynthesis.speak(speak);
+        }
+      } else {
+        // Firefoxではこれで音声が読み込める
+          voices = synth.getVoices();
+          // 読み上げ
+          var speak = new SpeechSynthesisUtterance();
+          speak.text = res;
+          speak.lang = "ja-JP";
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speechSynthesis.speak(speak);
+      }
+    }
   },
   watch: {
     recordingStartFlagCount: function (count) {
