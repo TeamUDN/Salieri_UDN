@@ -107,11 +107,30 @@ const face = new Vue({
       self.recognition.lang = "ja-JP";
       self.recognition.start(); // 認識開始
 
+      //self.recognition.onresult = () => { console.log('ok') }
+      //self.recognition.onstart = () => { console.log('on start') }
+      //self.recognition.onend = () => { console.log('on end') }
+
+      //self.recognition.onspeechstart = () => { console.log('on speech start') }
+      //self.recognition.onspeechend = () => { console.log('on speech end') }
+      //self.recognition.onnomatch= () => { console.log('no match') }
+      
+
+      //音声認識が終了したら再スタート
+      self.recognition.onend = () => { self.recognition.start() }
+      
       self.recognition.onerror = function () {
         console.log('認識できませんでした');
         // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-        self.recordingStartFlagCount++;
+        //self.recordingStartFlagCount++;
+        //startしなくても大丈夫ぽい
+        //self.recognition.start()
       }
+      
+      
+      
+      
+      
 
       self.recognition.onresult =  function (e) { // 音声認識時
         if (e.results.length > 0) {
@@ -135,12 +154,13 @@ const face = new Vue({
             self.pose = res.pose;
             self.model = res.model;
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            self.recordingStartFlagCount++;
+            //self.recordingStartFlagCount++;
           })
           .catch(function (error) { // 失敗
             console.log(error);
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            self.recordingStartFlagCount++;
+            //self.recordingStartFlagCount++;
+            self.recognition.start()
           });
         }
       }
