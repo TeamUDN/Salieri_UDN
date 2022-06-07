@@ -17,6 +17,7 @@ const face = new Vue({
   mounted: function () {
     this.faceFuncStart();
     this.webSpeechAPI();
+    this.speech();
   },
   methods: {
     faceFuncStart: function () {
@@ -105,32 +106,29 @@ const face = new Vue({
       var self = this;
       self.recognition = new webkitSpeechRecognition();
       self.recognition.lang = "ja-JP";
+      self.recognition.continuous = false;
       self.recognition.start(); // 認識開始
-
-      //self.recognition.onresult = () => { console.log('ok') }
-      //self.recognition.onstart = () => { console.log('on start') }
-      //self.recognition.onend = () => { console.log('on end') }
 
       self.recognition.onspeechstart = () => { console.log('on speech start') }
       self.recognition.onspeechend = () => { console.log('on speech end') }
-      //self.recognition.onnomatch= () => { console.log('no match') }
+      self.recognition.onosundstart = () => { console.log('on sound start') }
+      self.recognition.onsoundend = () => { console.log('on sound end') }
+
+      self.recognition.onaudiostart = () => { console.log('on audio start') }
+      self.recognition.onaudioend = () => { console.log('on audio end') }
       
 
-      //音声認識が終了したら再スタート
-      self.recognition.onend = () => { self.recognition.start() }
       
+
+      self.recognition.onnomatch = function() {
+        console.log('音声は認識できませんでした。');
+        self.recordingStartFlagCount++;
+      }
       self.recognition.onerror = function () {
         console.log('認識できませんでした');
         // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-        //self.recordingStartFlagCount++;
-        //startしなくても大丈夫ぽい
-        //self.recognition.start()
+        self.recordingStartFlagCount++;
       }
-      
-      
-      
-      
-      
 
       self.recognition.onresult =  function (e) { // 音声認識時
         if (e.results.length > 0) {
@@ -159,11 +157,18 @@ const face = new Vue({
           .catch(function (error) { // 失敗
             console.log(error);
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            //self.recordingStartFlagCount++;
-            self.recognition.start()
+            self.recordingStartFlagCount++;
           });
         }
       }
+
+      //音声認識が終了したら再スタート(読み切る前に認識スタートしてしまう．．．)
+      self.recognition.onend = () => { 
+        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+        //self.recordingStartFlagCount++;
+      }
+
+      
     },
     /*
     faceFuncStop: function () {
@@ -177,6 +182,8 @@ const face = new Vue({
     speech: function (res) {
       var synth = window.speechSynthesis;
       var voices = [];
+      var self = this;
+      
       
       if ( speechSynthesis.onvoiceschanged !== undefined ) {
         // Chromeではonvoiceschangedというイベントがあり、onvoiceschangedが呼ばれたタイミングでないと音声を取得できない
@@ -190,6 +197,12 @@ const face = new Vue({
             speak.lang = "ja-JP";
             speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
             speechSynthesis.speak(speak);
+            //読み上げ終了判定
+            speak.onend = function() {
+              console.log("end");
+              //音声認識再開
+              self.recordingStartFlagCount++
+            }
           };
         } else {
           voices = synth.getVoices();
@@ -199,6 +212,12 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
+          //読み上げ終了判定
+          speak.onend = function() {
+            console.log("end");
+            //音声認識再開
+            self.recordingStartFlagCount++
+          }
 
         }
 
@@ -211,6 +230,12 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
+          //読み上げ終了判定
+          speak.onend = function() {
+            console.log("end");
+            //音声認識再開
+            self.recordingStartFlagCount++
+          }
       }
     }
   },
