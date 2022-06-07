@@ -111,8 +111,8 @@ const face = new Vue({
       //self.recognition.onstart = () => { console.log('on start') }
       //self.recognition.onend = () => { console.log('on end') }
 
-      //self.recognition.onspeechstart = () => { console.log('on speech start') }
-      //self.recognition.onspeechend = () => { console.log('on speech end') }
+      self.recognition.onspeechstart = () => { console.log('on speech start') }
+      self.recognition.onspeechend = () => { console.log('on speech end') }
       //self.recognition.onnomatch= () => { console.log('no match') }
       
 
