@@ -12,6 +12,11 @@ def index():
     session["flag"]=0
     session["model"]="Salieri"
 
+    f = open('txt/chat.txt', 'r',encoding='UTF-8')
+    chat = f.read()
+
+    session["chat"]=chat
+
     return render_template('index.html')
 
 # /showにPOSTリクエストが送られたら処理してJSONを返す
@@ -20,16 +25,20 @@ def show():
     flag=session["flag"]
     txt=request.json['chatMessage']
     model=session["model"]
-    
-    res,choose,flag,model=responce(txt,flag,model)
+    chat=session["chat"]
 
+    res,choose,flag,model,chat,pose=responce(txt,flag,model,chat)
+    
+    #状態の更新
     session["flag"]=flag
     session["model"]=model
+    session["chat"]=chat
+    print(pose)
 
     return_json = {
         "message": res,
         "choose": choose,
-        "pose": "hoge",
+        "pose": pose,
         "model": model
     }
 

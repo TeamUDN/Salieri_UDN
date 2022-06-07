@@ -11,7 +11,7 @@ const face = new Vue({
     recognition: null,
     recordingStartFlagCount: 0,
     debugFlg: '',
-    modelMessage: 'いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
+    modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
     choiceArr: [],
   },
   mounted: function () {
@@ -180,8 +180,18 @@ const face = new Vue({
       
       if ( speechSynthesis.onvoiceschanged !== undefined ) {
         // Chromeではonvoiceschangedというイベントがあり、onvoiceschangedが呼ばれたタイミングでないと音声を取得できない
-        
-        speechSynthesis.onvoiceschanged  = function (){
+
+        if (window.speechSynthesis.onvoiceschanged == null) {
+          speechSynthesis.onvoiceschanged = function () {
+            voices = synth.getVoices();
+            // 読み上げ
+            var speak = new SpeechSynthesisUtterance();
+            speak.text = res;
+            speak.lang = "ja-JP";
+            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+            speechSynthesis.speak(speak);
+          };
+        } else {
           voices = synth.getVoices();
           // 読み上げ
           var speak = new SpeechSynthesisUtterance();
@@ -189,8 +199,9 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
-          
-        };
+
+        }
+
       } else {
         // Firefoxではこれで音声が読み込める
           voices = synth.getVoices();
