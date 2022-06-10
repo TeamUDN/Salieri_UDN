@@ -32,6 +32,8 @@ def chat_gpt(text,chat):
     f = open('api.txt', 'r',encoding='UTF-8')
     api = f.read()
 
+    f = open('txt/chat.txt', 'r',encoding='UTF-8')
+    prompt= f.read()
 
     openai.api_key = api
 
@@ -41,11 +43,13 @@ def chat_gpt(text,chat):
     input=text
 
     input_sq=restart_sequence+input+start_sequence
-    prompt=prompt+input_sq
-    #print(prompt)
+    #print(prompt,chat,input_sq)
+    prompt=prompt+chat+input_sq
+    
 
     response = openai.Completion.create(
     engine="text-davinci-002",
+    #engine="text-curie-001",
     prompt=prompt,
     temperature=0.9,
     max_tokens=150,
@@ -54,7 +58,9 @@ def chat_gpt(text,chat):
     presence_penalty=0.6,
     stop=["人間:", "サリエリ:"]
     )
-    return response['choices'][0]['text'],prompt
+
+    #print(prompt+response['choices'][0]['text'])
+    return response['choices'][0]['text'],input_sq
 
 
 def chat_emoji(text,chat):

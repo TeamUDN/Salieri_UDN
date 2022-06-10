@@ -3,13 +3,14 @@
 #from googletrans import Translator
 
 from chat import chat2
-#from chat import chat_gpt,chat_emoji
+from chat import chat_gpt,chat_emoji
 
 
 def responce(text,flag,model,chat):
     res=text
     choose=[]
     pose="def"
+    
 
     if text=="こんにちは" and flag==0:
         f = open('txt/op.txt', 'r',encoding='UTF-8')
@@ -100,8 +101,8 @@ def responce(text,flag,model,chat):
         flag=0
 
     if flag==2:
-        res,prompt=chat2(text,chat)
-        #res,prompt=chat_gpt(text,chat)
+        #res,prompt=chat2(text,chat)
+        res,prompt=chat_gpt(text,chat)
         chat=prompt+res
 
     if flag==3:
