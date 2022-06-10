@@ -40,7 +40,8 @@ def chat_gpt(text,chat):
 
     input=text
 
-    prompt=prompt+restart_sequence+input+start_sequence
+    input_sq=restart_sequence+input+start_sequence
+    prompt=prompt+input_sq
     #print(prompt)
 
     response = openai.Completion.create(
