@@ -69,8 +69,9 @@ const face = new Vue({
             //console.log(facetimeCount);
             self.debugFlg = '○'; // 認識時（デバック用）
             NotfacetimeCount = 0;
-            if (facetimeCount >= 40) {
-              //if (facetimeCount >= 10800) {//デバック用（3分）
+
+            if (facetimeCount >= 20) {
+            //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
               if (self.pageFirstChageFlag) {
                 self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
@@ -226,7 +227,9 @@ const face = new Vue({
             var speak = new SpeechSynthesisUtterance();
             speak.text = res;
             speak.lang = "ja-JP";
-            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+            speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+            speak.rate = 2;
+            speak.pitch = 1.5;
             speechSynthesis.speak(speak);
             speak.onstart = function () {
               //読み上げ開始！！ 口のフラグをオンにする
@@ -250,7 +253,9 @@ const face = new Vue({
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
           speak.lang = "ja-JP";
-          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+          speak.rate = 2;
+          speak.pitch = 1.5;
           speechSynthesis.speak(speak);
           speak.onstart = function () {
             //読み上げ開始！！！！！
@@ -270,6 +275,7 @@ const face = new Vue({
 
       } else {
         // Firefoxではこれで音声が読み込める
+
         voices = synth.getVoices();
         // 読み上げ
         var speak = new SpeechSynthesisUtterance();
@@ -286,6 +292,7 @@ const face = new Vue({
           self.mouth = 'false';
           console.log("------読み上げ終了------")
           if (res!="ご利用ありがとうございました"){
+
             //音声認識再開
           self.recordingStartFlagCount++
           }
