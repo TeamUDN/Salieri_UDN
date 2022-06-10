@@ -174,7 +174,9 @@ window.addEventListener("DOMContentLoaded", () => {
     let currentModel = "";
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
-    let cnt = 0;
+    let newMouth = <HTMLInputElement>document.getElementById('vueMouth');
+    let poseChangeCount = 0;
+    let mouthCnt = 0;
 
     // フレーム毎に呼ばれる関数
     const update = () => {
@@ -183,7 +185,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 時間計測
         let time = (new Date()).getTime()
         let delta = time - lastTime;
-        cnt += 1;
+        poseChangeCount += 1;
 
         //html側から変数が代入されていると分岐
         if (currentPose != String(newPose.value) || currentModel != String(newModel.value)) {
@@ -197,7 +199,14 @@ window.addEventListener("DOMContentLoaded", () => {
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)
             }
-            if (String(newModel.value) == "Salieri" && currentModel !== "Salieri") {
+            if (String(newModel.value) == "kurisu" && currentModel !== "kurisu") {
+                scene.remove.apply(scene, scene.children);
+                modelPass = modelKurisu;
+                newLoad()
+                sceneOption()
+                camera.lookAt(0, 1.2, 0)
+            }
+            if (String(newModel.value) == "salieri" && currentModel !== "salieri") {
                 scene.remove.apply(scene, scene.children);
                 modelPass = modelSarieli;
                 newLoad()
@@ -219,7 +228,7 @@ window.addEventListener("DOMContentLoaded", () => {
             currentPose = String(newPose.value)
             currentModel = String(newModel.value)
         }
-        if (cnt > 1200) {
+        if (poseChangeCount > 1200) {
             switch (getRandam(1, 4)) {
                 case 1:
                     makeAnimation(pose_doya)
@@ -234,7 +243,16 @@ window.addEventListener("DOMContentLoaded", () => {
                     makeAnimation(pose_ozigi)
                     break;
             }
-            cnt = 0;
+            poseChangeCount = 0;
+        }
+        if (Boolean(newMouth) == true) {
+            mouthCnt += 1;
+            let mouthHeight = mouthCnt * 2.5;
+            if (mouthHeight > 50) {
+                mouthHeight = (100 - mouthHeight)
+            }
+            faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight / 100)
+            faceNode.update()
         }
 
         // アニメーションの定期処理
