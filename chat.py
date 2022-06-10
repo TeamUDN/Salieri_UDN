@@ -21,7 +21,7 @@ def chat2(word):
 
     # 最適と思われるレスポンスを抽出
     print(res.json()['bestResponse']['utterance'])
-    return res.json()['bestResponse']['utterance']
+    return res.json()['bestResponse']['utterance'],word
 
 #print(chat2('こんにちは'))
 
