@@ -54,3 +54,31 @@ def chat_gpt(text,chat):
     stop=["人間:", "サリエリ:"]
     )
     return response['choices'][0]['text'],prompt
+
+def chat_emoji(text,chat):
+    prompt = chat
+    
+    f = open('api.txt', 'r',encoding='UTF-8')
+    api = f.read()
+
+
+    openai.api_key = api
+
+    input=text
+    prompt="映画のタイトルを絵文字に変換します。\n\nバック・トゥ・ザ・フューチャー：👨👴🚗🕒\nバットマン：🤵🦇\nトランスフォーマー：🚗🤖\nスターウォーズ：⭐️🌌\n"
+
+    prompt=prompt+input+"："
+    #print(prompt)
+
+    
+    response = openai.Completion.create(
+    model="text-davinci-002",
+    prompt=prompt,
+    temperature=0.8,
+    max_tokens=60,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0,
+    stop=["\n"]
+    )
+    return response['choices'][0]['text'],prompt
