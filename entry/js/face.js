@@ -213,6 +213,10 @@ const face = new Vue({
             speak.lang = "ja-JP";
             speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
             speechSynthesis.speak(speak);
+            speak.onstart=function(){
+              //読み上げ開始！！！！！
+
+            }
             //読み上げ終了判定
             speak.onend = function() {
               console.log("end");
@@ -228,6 +232,10 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
+          speak.onstart=function(){
+            //読み上げ開始！！！！！
+            
+          }
           //読み上げ終了判定
           speak.onend = function() {
             console.log("end");
@@ -246,6 +254,10 @@ const face = new Vue({
           speak.lang = "ja-JP";
           speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
+          speak.onstart=function(){
+            //読み上げ開始！！！！！
+            
+          }
           //読み上げ終了判定
           speak.onend = function() {
             console.log("end");
