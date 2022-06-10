@@ -1,6 +1,6 @@
 
-#from gen_img.gen_img import generate
-#from googletrans import Translator
+from gen_img.gen_img import generate
+from googletrans import Translator
 
 from chat import chat2
 from chat import chat_gpt,chat_emoji
@@ -29,7 +29,7 @@ def responce(text,flag,model,chat):
         
     if text=='私について' and flag==0:
         res="私はオープンキャンパス自動対応AIです。\n 実行できる音声認識コマンドは以下の通りです。"
-        choose=['・会話モードを開始：　AIと雑談することができます。','・会話モードを終了：　会話モードを終了します。','・絵文字モードを開始：映画の題名から絵文字を推定します','・絵文字モードを終了：　絵文字モードを終了します。'
+        choose=['・会話モードを開始：　AIと雑談することができます。','・会話モードを終了：　会話モードを終了します。','・絵文字モードを開始：映画の題名から絵文字を推定します','・絵文字モードを終了：絵文字モードを終了します。'
         ,'・人の画像を生成　：　指定した特徴の顔画像を生成します。','・ありがとう　　　：　案内を終了します。']
     
     if text=='ぬるぽ':
