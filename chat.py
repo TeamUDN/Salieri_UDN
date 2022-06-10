@@ -56,7 +56,8 @@ def chat_gpt(text,chat):
     return response['choices'][0]['text'],prompt
 
 
-def chat_test(text,chat):
+def chat_emoji(text,chat):
+
     prompt = chat
     
     f = open('api.txt', 'r',encoding='UTF-8')
@@ -82,5 +83,6 @@ def chat_test(text,chat):
     presence_penalty=0,
     stop=["\n"]
     )
+
     return response['choices'][0]['text'],prompt
 

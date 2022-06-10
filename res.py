@@ -1,8 +1,10 @@
 
 from gen_img.gen_img import generate
 from googletrans import Translator
-from chat import chat2, chat_test
-from chat import chat_gpt
+
+from chat import chat2
+from chat import chat_gpt,chat_emoji
+
 
 def responce(text,flag,model,chat):
     res=text
@@ -97,6 +99,10 @@ def responce(text,flag,model,chat):
         res,prompt=chat_test(text,chat)
         chat=prompt+res
         
+    if flag==3:
+        #res=chat2(text)
+        res,prompt=chat_emoji(text,chat)
+        #chat=prompt+res
 
 
     return res,choose,flag,model,chat,pose
