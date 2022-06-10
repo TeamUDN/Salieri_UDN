@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
     var modelPass = '../static/base_model/Salieri.vrm';
     const modelSarieli = '../static/base_model/Salieri.vrm';
     const modelKurisu = '../static/base_model/kurisu.vrm';
+    const modelbase = '../static/base_model/base.vrm';
 
     //posepathのリスト
     var posepass = '../static/pose/hellovrm.csv';
@@ -200,9 +201,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)
             }
-            if (String(newModel.value) == "kurisu" && currentModel !== "kurisu") {
+            if (String(newModel.value) == "udon" && currentModel !== "udon") {
                 scene.remove.apply(scene, scene.children);
-                modelPass = modelKurisu;
+                modelPass = modelbase;
                 newLoad()
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)

@@ -1,9 +1,9 @@
 
-from gen_img.gen_img import generate
-from googletrans import Translator
+#from gen_img.gen_img import generate
+#from googletrans import Translator
 
 from chat import chat2
-from chat import chat_gpt,chat_emoji
+#from chat import chat_gpt,chat_emoji
 
 
 def responce(text,flag,model,chat):
@@ -81,6 +81,11 @@ def responce(text,flag,model,chat):
         pose="doya"
         return res,choose,flag,model,chat,pose
 
+    if text=="ありがとう" and flag==0:
+        res="ご利用ありがとうございました"
+        return res,choose,flag,model,chat,pose
+
+
         
         
 
@@ -95,19 +100,15 @@ def responce(text,flag,model,chat):
         flag=0
 
     if flag==2:
-        #res=chat2(text)
-        res,prompt=chat_gpt(text,chat)
+        res,prompt=chat2(text,chat)
+        #res,prompt=chat_gpt(text,chat)
         chat=prompt+res
 
     if flag==3:
         #res=chat2(text)
-        res,prompt=chat_test(text,chat)
-        chat=prompt+res
-        
-    if flag==3:
-        #res=chat2(text)
-        res,prompt=chat_emoji(text,chat)
+        #res,prompt=chat_emoji(text,chat)
         #chat=prompt+res
+        pass
 
 
     return res,choose,flag,model,chat,pose

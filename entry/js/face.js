@@ -153,27 +153,29 @@ const face = new Vue({
           axios.post('/chat', {
             chatMessage: self.getMessage
           })
-            .then(response => { // 成功
-              var res = JSON.parse(response.data.values);
-              console.log(res.message);
-              if (res.choose.length !== 0) {
-                self.choiceArr = res.choose;
-              } else {
-                self.choiceArr = [];
-              }
-              self.modelMessage = res.message;
-              self.speech(res.message);
-              self.pose = res.pose;
-              self.model = res.model;
-              // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-              //self.recordingStartFlagCount++;
-            })
-            .catch(function (error) { // 失敗
-              console.log(error);
-              // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-              self.recordingStartFlagCount++;
-            });
-        } else {
+          .then(response => { // 成功
+            var res = JSON.parse(response.data.values);
+            console.log(res.message);
+            if (res.choose.length !== 0) {
+              self.choiceArr = res.choose;
+            } else {
+              self.choiceArr = [];
+            }
+            self.modelMessage = res.message;
+            self.speech(res.message);
+            self.pose = res.pose;
+            self.model = res.model;
+            //終了コマンドでモーダルを元に戻す
+            if (res.message=="ご利用ありがとうございました"){
+              self.pageChangeFlag = true
+            }
+          })
+          .catch(function (error) { // 失敗
+            console.log(error);
+            // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+            self.recordingStartFlagCount++;
+          });
+        }else{
           //ページ遷移前に音声を受け取った場合は再度認識開始
           self.recordingStartFlagCount++;
         }
