@@ -7,6 +7,7 @@ const face = new Vue({
     model: 'salieri',
     mouth: 'false',
     pageChangeFlag: true,
+    pageFirstChageFlag: true,//モーダルが消える時は1回目かどうか判定するためのフラグ　1回目ならtrue 2回目以降はfalse
     dialogueCount: 4,
     getMessage: "",
     recognition: null,
@@ -71,7 +72,10 @@ const face = new Vue({
             if (facetimeCount >= 40) {
               //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
-              self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
+              if (this.pageFirstChage) {
+                self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
+                self.pageFirstChageFlag = false;
+              }
             }
 
             //距離基底
@@ -98,6 +102,7 @@ const face = new Vue({
             if (NotfacetimeCount >= 10800) {
               //if (NotfacetimeCount >= 300) {//デバック用（5秒）
               self.pageChangeFlag = true
+              self.pageFirstChageFlag = true;
             }
 
           }
@@ -169,6 +174,7 @@ const face = new Vue({
               //終了コマンドでモーダルを元に戻す
               if (res.message == "ご利用ありがとうございました") {
                 self.pageChangeFlag = true
+                self.pageFirstChageFlag = true;
               }
             })
             .catch(function (error) { // 失敗
