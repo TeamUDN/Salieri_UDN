@@ -265,7 +265,9 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             if (mouthCnt > 30) {
                 mouthCnt = 0;
+                currentMouth = String(newMouth.value)
             }
+
         } else if (currentMouth != String(newMouth.value)) {
             faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0);
             faceNode.update();

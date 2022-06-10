@@ -153,29 +153,29 @@ const face = new Vue({
           axios.post('/chat', {
             chatMessage: self.getMessage
           })
-          .then(response => { // 成功
-            var res = JSON.parse(response.data.values);
-            console.log(res.message);
-            if (res.choose.length !== 0) {
-              self.choiceArr = res.choose;
-            } else {
-              self.choiceArr = [];
-            }
-            self.modelMessage = res.message;
-            self.speech(res.message);
-            self.pose = res.pose;
-            self.model = res.model;
-            //終了コマンドでモーダルを元に戻す
-            if (res.message=="ご利用ありがとうございました"){
-              self.pageChangeFlag = true
-            }
-          })
-          .catch(function (error) { // 失敗
-            console.log(error);
-            // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            self.recordingStartFlagCount++;
-          });
-        }else{
+            .then(response => { // 成功
+              var res = JSON.parse(response.data.values);
+              console.log(res.message);
+              if (res.choose.length !== 0) {
+                self.choiceArr = res.choose;
+              } else {
+                self.choiceArr = [];
+              }
+              self.modelMessage = res.message;
+              self.speech(res.message);
+              self.pose = res.pose;
+              self.model = res.model;
+              //終了コマンドでモーダルを元に戻す
+              if (res.message == "ご利用ありがとうございました") {
+                self.pageChangeFlag = true
+              }
+            })
+            .catch(function (error) { // 失敗
+              console.log(error);
+              // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+              self.recordingStartFlagCount++;
+            });
+        } else {
           //ページ遷移前に音声を受け取った場合は再度認識開始
           self.recordingStartFlagCount++;
         }
@@ -217,15 +217,13 @@ const face = new Vue({
             speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
             speechSynthesis.speak(speak);
             speak.onstart = function () {
-              //読み上げ開始！！！！！
-              console.log("======ただいま読み上げ中======")
+              //読み上げ開始！！ 口のフラグをオンにする
               self.mouth = 'true'
             }
             //読み上げ終了判定
             speak.onend = function () {
               self.mouth = 'false';
               console.log("------読み上げ終了------")
-              console.log("end");
               //音声認識再開
               self.recordingStartFlagCount++
             }
@@ -241,13 +239,10 @@ const face = new Vue({
           speak.onstart = function () {
             //読み上げ開始！！！！！
             self.mouth = 'true';
-            console.log("======ただいま読み上げ中======")
-
           }
           //読み上げ終了判定
           speak.onend = function () {
             self.mouth = 'false';
-            console.log("end");
             console.log("------読み上げ終了------")
             //音声認識再開
             self.recordingStartFlagCount++
@@ -267,13 +262,10 @@ const face = new Vue({
         speak.onstart = function () {
           //読み上げ開始！！！！！
           self.mouth = 'true';
-          console.log("======ただいま読み上げ中======")
-
         }
         //読み上げ終了判定
         speak.onend = function () {
           self.mouth = 'false';
-          console.log("end");
           console.log("------読み上げ終了------")
           //音声認識再開
           self.recordingStartFlagCount++
