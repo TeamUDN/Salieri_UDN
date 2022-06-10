@@ -171,7 +171,8 @@ window.addEventListener("DOMContentLoaded", () => {
     //変数宣言
     let lastTime = (new Date()).getTime()
     let currentPose = "";
-    let currentModel = "";
+    let currentModel = "salieri";
+    let currentMouth = "false";
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
     let newMouth = <HTMLInputElement>document.getElementById('vueMouth');
@@ -227,7 +228,10 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             currentPose = String(newPose.value)
             currentModel = String(newModel.value)
+            poseChangeCount = -1200
         }
+
+        //20秒ごとにポーズを変えるためのswitch文
         if (poseChangeCount > 1200) {
             switch (getRandam(1, 4)) {
                 case 1:
@@ -245,14 +249,26 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             poseChangeCount = 0;
         }
-        if (Boolean(newMouth) == true) {
+
+        if (String(newMouth.value) == 'true') {
             mouthCnt += 1;
-            let mouthHeight = mouthCnt * 2.5;
-            if (mouthHeight > 50) {
-                mouthHeight = (100 - mouthHeight)
+            let mouthHeight = mouthCnt * 4;
+            if (mouthHeight > 60) {
+                mouthHeight = (120 - mouthHeight);
             }
-            faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight / 100)
-            faceNode.update()
+            mouthHeight = mouthHeight / 100;
+
+            if (mixer != null) {
+                faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight);
+                faceNode.update();
+            }
+            if (mouthCnt > 30) {
+                mouthCnt = 0;
+            }
+        } else if (currentMouth != String(newMouth.value)) {
+            faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0);
+            faceNode.update();
+            currentMouth = String(newMouth.value)
         }
 
         // アニメーションの定期処理
