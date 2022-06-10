@@ -3,7 +3,7 @@ import json
 import os
 import openai
 
-def chat2(word):
+def chat2(word,chat):
 
     
 
@@ -21,7 +21,7 @@ def chat2(word):
 
     # 最適と思われるレスポンスを抽出
     print(res.json()['bestResponse']['utterance'])
-    return res.json()['bestResponse']['utterance']
+    return res.json()['bestResponse']['utterance'],chat
 
 #print(chat2('こんにちは'))
 
