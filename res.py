@@ -53,8 +53,13 @@ def responce(text,flag,model,chat):
 
 
     if text=="先輩" and flag==0:
-        res="こんにちは"
+        res="こんにちは紅莉栖です"
         model="kurisu"
+        return res,choose,flag,model,chat,pose
+
+    if text=="サリエリ" and flag==0:
+        res="こんにちはSalieriです"
+        model="salieri"
         return res,choose,flag,model,chat,pose
 
     if text=="ドヤ顔"and flag==0:
