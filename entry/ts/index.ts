@@ -173,6 +173,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let lastTime = (new Date()).getTime()
     let currentPose = "";
     let currentModel = "salieri";
+    let currentMouth = "false";
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
     let newMouth = <HTMLInputElement>document.getElementById('vueMouth');
@@ -228,7 +229,10 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             currentPose = String(newPose.value)
             currentModel = String(newModel.value)
+            poseChangeCount = -1200
         }
+
+        //20秒ごとにポーズを変えるためのswitch文
         if (poseChangeCount > 1200) {
             switch (getRandam(1, 4)) {
                 case 1:
@@ -246,21 +250,26 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             poseChangeCount = 0;
         }
-        if (Boolean(newMouth) == true) {
-            mouthCnt += 1;
-            let mouthHeight = mouthCnt * 2.5;
-            if (mouthHeight > 50) {
-                mouthHeight = (100 - mouthHeight);
-            }
-            mouthHeight /= 100;
 
-            //faceNode.setValue(VRMSchema.BlendShapePresetName.Joy, 0.08);
-            //faceNode.setValue(VRMSchema.BlendShapePresetName.Fun, 0.64);
-            //faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight);
-            //faceNode.update();
-            //console.log("読み上げ中");
-        } else {
-            mouthCnt = 0;
+        if (String(newMouth.value) == 'true') {
+            mouthCnt += 1;
+            let mouthHeight = mouthCnt * 4;
+            if (mouthHeight > 60) {
+                mouthHeight = (120 - mouthHeight);
+            }
+            mouthHeight = mouthHeight / 100;
+
+            if (mixer != null) {
+                faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight);
+                faceNode.update();
+            }
+            if (mouthCnt > 30) {
+                mouthCnt = 0;
+            }
+        } else if (currentMouth != String(newMouth.value)) {
+            faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0);
+            faceNode.update();
+            currentMouth = String(newMouth.value)
         }
 
         // アニメーションの定期処理

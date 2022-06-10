@@ -5,7 +5,7 @@ const face = new Vue({
   data: {
     pose: 'hellovrm',
     model: 'salieri',
-    mouth: false,
+    mouth: 'false',
     pageChangeFlag: true,
     dialogueCount: 4,
     getMessage: "",
@@ -74,9 +74,9 @@ const face = new Vue({
             }
 
             //距離基底
-            var abs_dis_x = positions[14][0] - positions[0][0];
-            var abs_x = Math.round(1000 * (positions[50][0] - positions[44][0]) / abs_dis_x);
-            var abs_y = Math.round(1000 * (positions[53][1] - positions[47][1]) / abs_dis_x);
+            //var abs_dis_x = positions[14][0] - positions[0][0];
+            //var abs_x = Math.round(1000 * (positions[50][0] - positions[44][0]) / abs_dis_x);
+            //var abs_y = Math.round(1000 * (positions[53][1] - positions[47][1]) / abs_dis_x);
             //console.log('相対x座標(50-44)：「' + abs_x + '」');
             //console.log('相対y座標(53-47)：「' + abs_y + '」');
 
@@ -218,11 +218,13 @@ const face = new Vue({
             speechSynthesis.speak(speak);
             speak.onstart = function () {
               //読み上げ開始！！！！！
-              self.pose = true;
+              console.log("======ただいま読み上げ中======")
+              self.mouth = 'true'
             }
             //読み上げ終了判定
             speak.onend = function () {
-              self.pose = false;
+              self.mouth = 'false';
+              console.log("------読み上げ終了------")
               console.log("end");
               //音声認識再開
               self.recordingStartFlagCount++
@@ -238,13 +240,15 @@ const face = new Vue({
           speechSynthesis.speak(speak);
           speak.onstart = function () {
             //読み上げ開始！！！！！
-            self.pose = true;
+            self.mouth = 'true';
+            console.log("======ただいま読み上げ中======")
 
           }
           //読み上げ終了判定
           speak.onend = function () {
-            self.pose = false;
+            self.mouth = 'false';
             console.log("end");
+            console.log("------読み上げ終了------")
             //音声認識再開
             self.recordingStartFlagCount++
           }
@@ -262,13 +266,15 @@ const face = new Vue({
         speechSynthesis.speak(speak);
         speak.onstart = function () {
           //読み上げ開始！！！！！
-          self.pose = true;
+          self.mouth = 'true';
+          console.log("======ただいま読み上げ中======")
 
         }
         //読み上げ終了判定
         speak.onend = function () {
-          self.pose = false;
+          self.mouth = 'false';
           console.log("end");
+          console.log("------読み上げ終了------")
           //音声認識再開
           self.recordingStartFlagCount++
         }
