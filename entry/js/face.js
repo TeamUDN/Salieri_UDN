@@ -18,7 +18,7 @@ const face = new Vue({
   },
   mounted: function () {
     this.faceFuncStart();
-    this.webSpeechAPI();
+    //this.webSpeechAPI();
     this.speech();
   },
   methods: {
@@ -72,9 +72,10 @@ const face = new Vue({
             if (facetimeCount >= 40) {
               //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
-              if (this.pageFirstChage) {
+              if (self.pageFirstChageFlag) {
                 self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
                 self.pageFirstChageFlag = false;
+                
               }
             }
 
@@ -173,8 +174,10 @@ const face = new Vue({
               self.model = res.model;
               //終了コマンドでモーダルを元に戻す
               if (res.message == "ご利用ありがとうございました") {
-                self.pageChangeFlag = true
+                self.pageChangeFlag = true;
                 self.pageFirstChageFlag = true;
+                self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。";
+                self.getMessage="";
               }
             })
             .catch(function (error) { // 失敗
@@ -231,8 +234,12 @@ const face = new Vue({
             speak.onend = function () {
               self.mouth = 'false';
               console.log("------読み上げ終了------")
-              //音声認識再開
+
+              if (res!="ご利用ありがとうございました"){
+                //音声認識再開
               self.recordingStartFlagCount++
+              }
+              
             }
           };
         } else {
@@ -251,8 +258,10 @@ const face = new Vue({
           speak.onend = function () {
             self.mouth = 'false';
             console.log("------読み上げ終了------")
-            //音声認識再開
-            self.recordingStartFlagCount++
+            if (res!="ご利用ありがとうございました"){
+                //音声認識再開
+              self.recordingStartFlagCount++
+              }
           }
 
         }
@@ -274,8 +283,10 @@ const face = new Vue({
         speak.onend = function () {
           self.mouth = 'false';
           console.log("------読み上げ終了------")
-          //音声認識再開
+          if (res!="ご利用ありがとうございました"){
+            //音声認識再開
           self.recordingStartFlagCount++
+          }
         }
       }
     }
