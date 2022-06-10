@@ -23,24 +23,19 @@
   gap: 0.5rem;
   p {
     color: #252525;
+    font-size: 2.5rem;
   }
 }
 
-.selectArea {
-  position: fixed;
-  right: calc(100 / 1200 * 100vw);
-  top: calc(400 / 1200 * 100vh);
-}
-
 .messageArea {
-  width: 75vw;
+  width: 65vw;
   position: fixed;
-  right: calc(150 / 1200 * 100vw);
-  bottom: calc(250 / 1200 * 100vh);
+  right: 17vw;
+  bottom: calc(150 / 1200 * 100vh);
 }
 
 .mainAreaLogo {
-  width: 7rem;
+  width: 13rem;
   position: fixed;
   right: 3rem;
   bottom: 3rem;
@@ -53,7 +48,7 @@
   margin: 0 auto;
   canvas {
     width: calc(100vw*(4/7));
-    height: calc(100vh);
+    height: 100vh;
     border-radius: 10px;
   }
 }

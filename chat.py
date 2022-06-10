@@ -1,5 +1,7 @@
 import requests
 import json
+import os
+import openai
 
 def chat2(word):
 
@@ -22,3 +24,33 @@ def chat2(word):
     return res.json()['bestResponse']['utterance']
 
 #print(chat2('こんにちは'))
+
+
+def chat_gpt(text,chat):
+    prompt = chat
+    
+    f = open('api.txt', 'r',encoding='UTF-8')
+    api = f.read()
+
+
+    openai.api_key = api
+
+    start_sequence = "\nサリエリ:"
+    restart_sequence = "\n人間: "
+
+    input=text
+
+    prompt=prompt+restart_sequence+input+start_sequence
+    #print(prompt)
+
+    response = openai.Completion.create(
+    engine="text-davinci-002",
+    prompt=prompt,
+    temperature=0.9,
+    max_tokens=150,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0.6,
+    stop=["人間:", "サリエリ:"]
+    )
+    return response['choices'][0]['text'],prompt

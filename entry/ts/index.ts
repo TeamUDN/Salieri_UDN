@@ -4,14 +4,24 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { VRM, VRMSchema, VRMUnlitMaterial } from '@pixiv/three-vrm'
 import { convertToObject } from 'typescript';
 import { mode } from '../../webpack.config';
+import { randInt } from 'three/src/math/MathUtils';
 
 window.addEventListener("DOMContentLoaded", () => {
     // canvasの取得
     var canvas = <HTMLCanvasElement>document.getElementById('canvas');
 
-    // model_pathの取得
+    // modelpathのリスト
     var modelPass = '../static/base_model/Salieri.vrm';
-    var pose_hello = '../static/pose/hellovrm.csv';
+    const modelSarieli = '../static/base_model/Salieri.vrm';
+    const modelKurisu = '../static/base_model/kurisu.vrm';
+
+    //posepathのリスト
+    var posepass = '../static/pose/hellovrm.csv';
+    const pose_hello = '../static/pose/hellovrm.csv';
+    const pose_ozigi = '../static/pose/ozigi.csv';
+    const pose_suneru = '../static/pose/suneru.csv';
+    const pose_doya = '../static/pose/doya.csv';
+    const pose_leftHand = '../static/pose/leftHand.csv';
 
     // シーンの設定
     const scene = new THREE.Scene()
@@ -62,17 +72,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     makeAnimation(pose_hello);
                 })
             }
-            /*
-            ,
-            (progress) => {
-                //console.log('Loading model...', Math.round(100.0 * (progress.loaded / progress.total)), '%');
-                const progressNum = <HTMLInputElement>document.getElementById('progressNum');
-                progressNum.innerHTML = String(Math.round(100.0 * (progress.loaded / progress.total)) + '%');
-                const progressBarFull = <HTMLInputElement>document.getElementById('progressBarFull');
-                progressBarFull.style.width = Math.round(100.0 * (progress.loaded / progress.total)) + '%';
-                if ((Math.round(100.0 * (progress.loaded / progress.total))) == 100) { (<HTMLInputElement>document.getElementById('loading')).style.display = 'none' }
-            },
-            (error) => console.error(error)*/
         )
     }
 
@@ -157,16 +156,86 @@ window.addEventListener("DOMContentLoaded", () => {
         action.play()
     }
 
-    //消えないように変数宣言
-    let lastTime = (new Date()).getTime()
+    const resetFaceNode = (faceNode: any) => {
+        faceNode.setValue(VRMSchema.BlendShapePresetName.Angry, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.Fun, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.Joy, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.Sorrow, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.I, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.U, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.E, 0)
+        faceNode.setValue(VRMSchema.BlendShapePresetName.O, 0)
+    }
 
-    // フレーム毎に呼ばれる
+    //変数宣言
+    let lastTime = (new Date()).getTime()
+    let currentPose = "";
+    let currentModel = "";
+    let newPose = <HTMLInputElement>document.getElementById('vuePose');
+    let newModel = <HTMLInputElement>document.getElementById('vueModel');
+    let cnt = 0;
+
+    // フレーム毎に呼ばれる関数
     const update = () => {
         requestAnimationFrame(update)
 
         // 時間計測
         let time = (new Date()).getTime()
         let delta = time - lastTime;
+        cnt += 1;
+
+        //html側から変数が代入されていると分岐
+        if (currentPose != String(newPose.value) || currentModel != String(newModel.value)) {
+            if (mixer != null) { resetFaceNode(faceNode) }
+
+            //モデルの変更
+            if (String(newModel.value) == "kurisu" && currentModel !== "kurisu") {
+                scene.remove.apply(scene, scene.children);
+                modelPass = modelKurisu;
+                newLoad()
+                sceneOption()
+                camera.lookAt(0, 1.2, 0)
+            }
+            if (String(newModel.value) == "Salieri" && currentModel !== "Salieri") {
+                scene.remove.apply(scene, scene.children);
+                modelPass = modelSarieli;
+                newLoad()
+                sceneOption()
+                camera.lookAt(0, 1.1, 0)
+            }
+
+            //ポーズの変更
+            if (String(newPose.value) == "doya") {
+                posepass = pose_doya
+                faceNode.setValue(VRMSchema.BlendShapePresetName.Joy, 0.08)
+                faceNode.setValue(VRMSchema.BlendShapePresetName.Fun, 0.64)
+                faceNode.update()
+                makeAnimation(posepass)
+            } else if (String(newPose.value) == "leftHand") {
+                posepass = pose_leftHand
+                makeAnimation(posepass)
+            }
+            currentPose = String(newPose.value)
+            currentModel = String(newModel.value)
+        }
+        if (cnt > 1200) {
+            switch (getRandam(1, 4)) {
+                case 1:
+                    makeAnimation(pose_doya)
+                    break;
+                case 2:
+                    makeAnimation(pose_hello)
+                    break;
+                case 3:
+                    makeAnimation(pose_leftHand)
+                    break;
+                case 4:
+                    makeAnimation(pose_ozigi)
+                    break;
+            }
+            cnt = 0;
+        }
 
         // アニメーションの定期処理
         if (mixer) {
@@ -181,3 +250,9 @@ window.addEventListener("DOMContentLoaded", () => {
     update()
 })
 
+function getRandam(n: number, m: number) {
+    for (let i = 0; i < 5; i++) {
+        let num = Math.floor(Math.random() * (m + 1 - n)) + n;
+        return num;
+    }
+};
