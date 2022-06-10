@@ -71,6 +71,7 @@ const face = new Vue({
             if (facetimeCount >= 40) {
               //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
+              self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
             }
 
             //距離基底
