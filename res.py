@@ -96,11 +96,6 @@ def responce(text,flag,model,chat):
 
     if flag==3:
         #res=chat2(text)
-        res,prompt=chat_test(text,chat)
-        chat=prompt+res
-        
-    if flag==3:
-        #res=chat2(text)
         res,prompt=chat_emoji(text,chat)
         #chat=prompt+res
 

@@ -67,7 +67,7 @@ const face = new Vue({
             //console.log(facetimeCount);
             self.debugFlg = '○'; // 認識時（デバック用）
             NotfacetimeCount = 0;
-            if (facetimeCount >= 40) {
+            if (facetimeCount >= 20) {
             //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
             }
