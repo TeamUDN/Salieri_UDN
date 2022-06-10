@@ -2,7 +2,7 @@
 from gen_img.gen_img import generate
 from googletrans import Translator
 from chat import chat2
-from chat import chat_gpt
+from chat import chat_gpt,chat_emoji
 
 def responce(text,flag,model,chat):
     res=text
@@ -41,6 +41,11 @@ def responce(text,flag,model,chat):
         flag=2
         res="会話モードに移行します"
         return res,choose,flag,model,chat,pose
+
+    if text=="絵文字モードを開始" and flag==0:
+        flag=3
+        res="絵文字モードに移行します"
+        return res,choose,flag,model,chat,pose
     
     if text=="会話モードを終了":
         if flag!=2:
@@ -49,6 +54,14 @@ def responce(text,flag,model,chat):
         else:
             flag=0
             res="会話モードを終了します。"
+
+    if text=="絵文字モードを終了":
+        if flag!=3:
+            res="絵文字モードはまだ開始していません。"
+            return res,choose,flag,model,chat,pose
+        else:
+            flag=0
+            res="絵文字モードを終了します。"
 
 
     if text=="先輩" and flag==0:
@@ -79,6 +92,10 @@ def responce(text,flag,model,chat):
         res,prompt=chat_gpt(text,chat)
         chat=prompt+res
         
+    if flag==3:
+        #res=chat2(text)
+        res,prompt=chat_emoji(text,chat)
+        #chat=prompt+res
 
 
     return res,choose,flag,model,chat,pose
