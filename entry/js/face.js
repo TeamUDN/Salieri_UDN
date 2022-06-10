@@ -219,7 +219,7 @@ const face = new Vue({
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
           speak.lang = "ja-JP";
-          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
           //読み上げ終了判定
           speak.onend = function() {
@@ -237,7 +237,7 @@ const face = new Vue({
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
           speak.lang = "ja-JP";
-          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
           speechSynthesis.speak(speak);
           //読み上げ終了判定
           speak.onend = function() {
