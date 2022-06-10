@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
     var modelPass = '../static/base_model/Salieri.vrm';
     const modelSarieli = '../static/base_model/Salieri.vrm';
     const modelKurisu = '../static/base_model/kurisu.vrm';
+    const modelbase = '../static/base_model/base.vrm';
 
     //posepathのリスト
     var posepass = '../static/pose/hellovrm.csv';
@@ -171,7 +172,7 @@ window.addEventListener("DOMContentLoaded", () => {
     //変数宣言
     let lastTime = (new Date()).getTime()
     let currentPose = "";
-    let currentModel = "";
+    let currentModel = "salieri";
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
     let newMouth = <HTMLInputElement>document.getElementById('vueMouth');
@@ -199,9 +200,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)
             }
-            if (String(newModel.value) == "kurisu" && currentModel !== "kurisu") {
+            if (String(newModel.value) == "udon" && currentModel !== "udon") {
                 scene.remove.apply(scene, scene.children);
-                modelPass = modelKurisu;
+                modelPass = modelbase;
                 newLoad()
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)
@@ -249,10 +250,17 @@ window.addEventListener("DOMContentLoaded", () => {
             mouthCnt += 1;
             let mouthHeight = mouthCnt * 2.5;
             if (mouthHeight > 50) {
-                mouthHeight = (100 - mouthHeight)
+                mouthHeight = (100 - mouthHeight);
             }
-            faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight / 100)
-            faceNode.update()
+            mouthHeight /= 100;
+
+            //faceNode.setValue(VRMSchema.BlendShapePresetName.Joy, 0.08);
+            //faceNode.setValue(VRMSchema.BlendShapePresetName.Fun, 0.64);
+            //faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight);
+            //faceNode.update();
+            //console.log("読み上げ中");
+        } else {
+            mouthCnt = 0;
         }
 
         // アニメーションの定期処理
