@@ -164,8 +164,10 @@ const face = new Vue({
             self.speech(res.message);
             self.pose = res.pose;
             self.model = res.model;
-            // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-            //self.recordingStartFlagCount++;
+            //終了コマンドでモーダルを元に戻す
+            if (res.message=="ご利用ありがとうございました"){
+              self.pageChangeFlag = true
+            }
           })
           .catch(function (error) { // 失敗
             console.log(error);
