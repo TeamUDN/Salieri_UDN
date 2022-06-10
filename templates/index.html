@@ -29,16 +29,15 @@
     <div id="modelArea" class="topModelArea">
       <canvas id="canvas"></canvas>
     </div>
-    <!-- select area -->
-    <div class="dialogueBase selectArea"
-      v-if="choiceArr.length !== 0">
-      <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
-      </p>
-    </div>
     <!-- message area -->
     <div class="dialogueBase messageArea">
       <p>入力音声: [[ getMessage ]]</p>
       <p>[[ modelMessage ]]</p>
+      <!-- select area -->
+      <div class="" v-if="choiceArr.length !== 0">
+        <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
+        </p>
+      </div>
     </div>
     <img class="mainAreaLogo" src="../static/img/Salieri.png" alt="Salieri logo">
   </div>

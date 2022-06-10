@@ -27,17 +27,18 @@ def show():
     model=session["model"]
     chat=session["chat"]
 
-    res,choose,flag,model,chat=responce(txt,flag,model,chat)
+    res,choose,flag,model,chat,pose=responce(txt,flag,model,chat)
     
     #状態の更新
     session["flag"]=flag
     session["model"]=model
     session["chat"]=chat
+    print(pose)
 
     return_json = {
         "message": res,
         "choose": choose,
-        "pose": "hoge",
+        "pose": pose,
         "model": model
     }
 
