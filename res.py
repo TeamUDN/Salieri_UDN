@@ -1,7 +1,6 @@
 
-#from gen_img.gen_img import generate
-#from googletrans import Translator
-
+from gen_img.gen_img import generate
+from googletrans import Translator
 from chat import chat2
 from chat import chat_gpt
 
@@ -70,9 +69,9 @@ def responce(text,flag,model,chat):
     if flag==1:
         res=text+"を生成しました"
 
-        #tr = Translator()
-        #tr=tr.translate(text=text, src="ja", dest="en").text
-        #generate(tr)
+        tr = Translator()
+        tr=tr.translate(text=text, src="ja", dest="en").text
+        generate(tr)
         flag=0
 
     if flag==2:
