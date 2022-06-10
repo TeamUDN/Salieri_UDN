@@ -15,7 +15,7 @@ def index():
     f = open('txt/chat.txt', 'r',encoding='UTF-8')
     chat = f.read()
 
-    session["chat"]=chat
+    session["chat"]=""
 
     return render_template('index.html')
 
@@ -34,7 +34,17 @@ def show():
     #状態の更新
     session["flag"]=flag
     session["model"]=model
-    session["chat"]=chat
+    if chat!="":
+        chat_sq=session["chat"]+chat
+        chat_list=chat_sq.split("人間:")
+        #print(chat_list)
+        if len(chat_list)>3:
+            chat_sq="人間:"+chat_list[-2]+"人間:"+chat_list[-1]
+
+        print("-----")
+        print(chat_sq)
+        session["chat"]=chat_sq
+    
     
 
     return_json = {

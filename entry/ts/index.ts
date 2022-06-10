@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
     var modelPass = '../static/base_model/Salieri.vrm';
     const modelSarieli = '../static/base_model/Salieri.vrm';
     const modelKurisu = '../static/base_model/kurisu.vrm';
+    const modelbase = '../static/base_model/base.vrm';
 
     //posepathのリスト
     var posepass = '../static/pose/hellovrm.csv';
@@ -171,10 +172,13 @@ window.addEventListener("DOMContentLoaded", () => {
     //変数宣言
     let lastTime = (new Date()).getTime()
     let currentPose = "";
-    let currentModel = "";
+    let currentModel = "salieri";
+    let currentMouth = "false";
     let newPose = <HTMLInputElement>document.getElementById('vuePose');
     let newModel = <HTMLInputElement>document.getElementById('vueModel');
-    let cnt = 0;
+    let newMouth = <HTMLInputElement>document.getElementById('vueMouth');
+    let poseChangeCount = 0;
+    let mouthCnt = 0;
 
     // フレーム毎に呼ばれる関数
     const update = () => {
@@ -183,7 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 時間計測
         let time = (new Date()).getTime()
         let delta = time - lastTime;
-        cnt += 1;
+        poseChangeCount += 1;
 
         //html側から変数が代入されていると分岐
         if (currentPose != String(newPose.value) || currentModel != String(newModel.value)) {
@@ -197,7 +201,14 @@ window.addEventListener("DOMContentLoaded", () => {
                 sceneOption()
                 camera.lookAt(0, 1.2, 0)
             }
-            if (String(newModel.value) == "Salieri" && currentModel !== "Salieri") {
+            if (String(newModel.value) == "udon" && currentModel !== "udon") {
+                scene.remove.apply(scene, scene.children);
+                modelPass = modelbase;
+                newLoad()
+                sceneOption()
+                camera.lookAt(0, 1.2, 0)
+            }
+            if (String(newModel.value) == "salieri" && currentModel !== "salieri") {
                 scene.remove.apply(scene, scene.children);
                 modelPass = modelSarieli;
                 newLoad()
@@ -218,8 +229,11 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             currentPose = String(newPose.value)
             currentModel = String(newModel.value)
+            poseChangeCount = -1200
         }
-        if (cnt > 1200) {
+
+        //20秒ごとにポーズを変えるためのswitch文
+        if (poseChangeCount > 1200) {
             switch (getRandam(1, 4)) {
                 case 1:
                     makeAnimation(pose_doya)
@@ -234,7 +248,30 @@ window.addEventListener("DOMContentLoaded", () => {
                     makeAnimation(pose_ozigi)
                     break;
             }
-            cnt = 0;
+            poseChangeCount = 0;
+        }
+
+        if (String(newMouth.value) == 'true') {
+            mouthCnt += 1;
+            let mouthHeight = mouthCnt * 4;
+            if (mouthHeight > 60) {
+                mouthHeight = (120 - mouthHeight);
+            }
+            mouthHeight = mouthHeight / 100;
+
+            if (mixer != null) {
+                faceNode.setValue(VRMSchema.BlendShapePresetName.A, mouthHeight);
+                faceNode.update();
+            }
+            if (mouthCnt > 30) {
+                mouthCnt = 0;
+                currentMouth = String(newMouth.value)
+            }
+
+        } else if (currentMouth != String(newMouth.value)) {
+            faceNode.setValue(VRMSchema.BlendShapePresetName.A, 0);
+            faceNode.update();
+            currentMouth = String(newMouth.value)
         }
 
         // アニメーションの定期処理

@@ -1,6 +1,6 @@
 
-from gen_img.gen_img import generate
-from googletrans import Translator
+#from gen_img.gen_img import generate
+#from googletrans import Translator
 
 from chat import chat2
 from chat import chat_gpt,chat_emoji
@@ -10,6 +10,7 @@ def responce(text,flag,model,chat):
     res=text
     choose=[]
     pose="def"
+    
 
     if text=="こんにちは" and flag==0:
         f = open('txt/op.txt', 'r',encoding='UTF-8')
@@ -67,14 +68,24 @@ def responce(text,flag,model,chat):
 
 
     if text=="先輩" and flag==0:
-        res="こんにちは"
+        res="こんにちは紅莉栖です"
         model="kurisu"
+        return res,choose,flag,model,chat,pose
+
+    if text=="サリエリ" and flag==0:
+        res="こんにちはSalieriです"
+        model="salieri"
         return res,choose,flag,model,chat,pose
 
     if text=="ドヤ顔"and flag==0:
         res="ドャッ"
         pose="doya"
         return res,choose,flag,model,chat,pose
+
+    if text=="ありがとう" and flag==0:
+        res="ご利用ありがとうございました"
+        return res,choose,flag,model,chat,pose
+
 
         
         
@@ -90,7 +101,7 @@ def responce(text,flag,model,chat):
         flag=0
 
     if flag==2:
-        #res=chat2(text)
+        #res,prompt=chat2(text,chat)
         res,prompt=chat_gpt(text,chat)
         chat=prompt+res
 
@@ -98,6 +109,7 @@ def responce(text,flag,model,chat):
         #res=chat2(text)
         res,prompt=chat_emoji(text,chat)
         #chat=prompt+res
+        
 
 
     return res,choose,flag,model,chat,pose
