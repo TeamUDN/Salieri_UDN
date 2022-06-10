@@ -1,6 +1,6 @@
 
-from gen_img.gen_img import generate
-from googletrans import Translator
+#from gen_img.gen_img import generate
+#from googletrans import Translator
 
 from chat import chat2
 #from chat import chat_gpt,chat_emoji
