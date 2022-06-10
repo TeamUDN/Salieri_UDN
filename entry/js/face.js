@@ -108,8 +108,10 @@ const face = new Vue({
       self.recognition = new webkitSpeechRecognition();
       self.recognition.lang = "ja-JP";
       self.recognition.continuous = false;
-      self.recognition.start(); // 認識開始
 
+      
+      self.recognition.start(); // 認識開始
+      
       self.recognition.onspeechstart = () => { console.log('on speech start') }
       self.recognition.onspeechend = () => {
         console.log('on speech end')
@@ -140,7 +142,9 @@ const face = new Vue({
 
       self.recognition.onresult = function (e) { // 音声認識時
         voiceCheckFlag = true;
-        if (e.results.length > 0) {
+        console.log(self.pageChangeFlag)
+        //ページ遷移前か確認
+        if (e.results.length > 0 && self.pageChangeFlag==false) {
           // 音声認識で取得した文章をgetMessageに代入
           self.getMessage = e.results[0][0].transcript;
           console.log(self.getMessage);
@@ -168,6 +172,9 @@ const face = new Vue({
             // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
             self.recordingStartFlagCount++;
           });
+        }else{
+          //ページ遷移前に音声を受け取った場合は再度認識開始
+          self.recordingStartFlagCount++;
         }
       }
 
