@@ -9,10 +9,11 @@ app.secret_key = 'secret'
 
 @app.route('/')
 def index():
-    session["flag"]=0
+    session["flag"]=-1
     session["model"]="Salieri"
 
-    f = open('txt/chat.txt', 'r',encoding='UTF-8')
+    #f = open('txt/chat.txt', 'r',encoding='UTF-8')
+    f = open('txt/chat2.txt', 'r',encoding='UTF-8')
     chat = f.read()
 
     session["chat"]=""
