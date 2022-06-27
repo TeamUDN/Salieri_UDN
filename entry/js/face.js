@@ -13,7 +13,7 @@ const face = new Vue({
     recognition: null,
     recordingStartFlagCount: 0,
     debugFlg: '',
-    modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。',
+    modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。',
     choiceArr: [],
   },
   mounted: function () {
@@ -74,7 +74,7 @@ const face = new Vue({
             //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
               if (self.pageFirstChageFlag) {
-                self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。');
+                self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのサリエリです。「こんにちは」と話しかけて下さい。');
                 self.pageFirstChageFlag = false;
                 
               }
@@ -105,7 +105,7 @@ const face = new Vue({
               //if (NotfacetimeCount >= 300) {//デバック用（5秒）
               self.pageChangeFlag = true;
               self.pageFirstChageFlag = true;
-              self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。";
+              self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
               self.getMessage="";
             }
 
@@ -179,7 +179,7 @@ const face = new Vue({
               if (res.message == "ご利用ありがとうございました") {
                 self.pageChangeFlag = true;
                 self.pageFirstChageFlag = true;
-                self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIです。「こんにちは」と話しかけて下さい。";
+                self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
                 self.getMessage="";
               }
             })

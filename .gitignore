@@ -5,4 +5,8 @@ gen_img/karras2019stylegan-ffhq-1024x1024.for_g_all.pt
 __pycache__/
 node_modules/
 api.txt
+mask_dec/img/
+mask_dec/output
+mask_dec/FRCNN.pt
+
 
