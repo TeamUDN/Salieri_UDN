@@ -101,13 +101,14 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            if (NotfacetimeCount >= 10800) {
+            
+            //if (NotfacetimeCount >= 10800) {
               //if (NotfacetimeCount >= 300) {//デバック用（5秒）
-              self.pageChangeFlag = true;
-              self.pageFirstChageFlag = true;
-              self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
-              self.getMessage="";
-            }
+            //  self.pageChangeFlag = true;
+            //  self.pageFirstChageFlag = true;
+            //  self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
+            //  self.getMessage="";
+            //}
 
           }
         })();
