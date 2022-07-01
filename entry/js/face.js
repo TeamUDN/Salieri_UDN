@@ -76,7 +76,7 @@ const face = new Vue({
               if (self.pageFirstChageFlag) {
                 self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのサリエリです。「こんにちは」と話しかけて下さい。');
                 self.pageFirstChageFlag = false;
-                
+
               }
             }
 
@@ -101,7 +101,7 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            
+
             //if (NotfacetimeCount >= 10800) {
               //if (NotfacetimeCount >= 300) {//デバック用（5秒）
             //  self.pageChangeFlag = true;
@@ -195,11 +195,13 @@ const face = new Vue({
         }
       }
 
+      /*
       //音声認識が終了したら再スタート(読み切る前に認識スタートしてしまう．．．)
       self.recognition.onend = () => {
         // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-        //self.recordingStartFlagCount++;
+        self.recordingStartFlagCount++;
       }
+      */
 
 
     },
@@ -228,7 +230,7 @@ const face = new Vue({
             var speak = new SpeechSynthesisUtterance();
             speak.text = res;
             speak.lang = "ja-JP";
-            speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
             speak.rate = 2;
             speak.pitch = 1.5;
             speechSynthesis.speak(speak);
@@ -245,7 +247,7 @@ const face = new Vue({
                 //音声認識再開
               self.recordingStartFlagCount++
               }
-              
+
             }
           };
         } else {
@@ -254,9 +256,11 @@ const face = new Vue({
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
           speak.lang = "ja-JP";
-          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
-          speak.rate = 2;
-          speak.pitch = 1.5;
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          //speak.rate = 2;
+          speak.rate = 1;
+          //speak.pitch = 1.5;
+          speak.pitch = 1;
           speechSynthesis.speak(speak);
           speak.onstart = function () {
             //読み上げ開始！！！！！
