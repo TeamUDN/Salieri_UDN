@@ -40,7 +40,7 @@ def chat_gpt(text,chat):
     openai.api_key = api
 
     start_sequence = "\nサリエリ:"
-    restart_sequence = "\n人間: "
+    restart_sequence = "\nYou:"
 
     input=text
 
@@ -58,11 +58,12 @@ def chat_gpt(text,chat):
     top_p=1,
     frequency_penalty=0,
     presence_penalty=0.6,
-    stop=["人間:", "サリエリ:"]
+    stop=["You:", "サリエリ:"]
     )
 
-    #print(prompt+response['choices'][0]['text'])
-    return response['choices'][0]['text'],input_sq
+    res=response['choices'][0]['text']
+    print(prompt+res)
+    return res,prompt
 
 
 def chat_emoji(text,chat):
@@ -94,4 +95,40 @@ def chat_emoji(text,chat):
     )
 
     return response['choices'][0]['text'],prompt
+
+def chat_eng(text,chat):
+    
+    f = open('api.txt', 'r',encoding='UTF-8')
+    api = f.read()
+
+    f = open('txt/chat_jpn_eng.txt', 'r',encoding='UTF-8')
+    prompt= f.read()
+
+    openai.api_key = api
+
+    start_sequence = "\nSalieri:"
+    restart_sequence = "\nYou:"
+
+    input=text
+
+    input_sq=restart_sequence+input+start_sequence
+    #print(prompt,chat,input_sq)
+    prompt=prompt+chat+input_sq
+
+    
+
+    response = openai.Completion.create(
+    model="text-davinci-002",
+    prompt=prompt,
+    temperature=0,
+    max_tokens=100,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0,
+    stop=["\n"]
+    )
+
+    res=response['choices'][0]['text']
+    print(prompt+res)
+    return res,prompt
 
