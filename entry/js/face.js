@@ -305,6 +305,10 @@ const face = new Vue({
           }
         }
       }
+    },
+    soundStop: function () {
+      console.log('sound stop');
+      speechSynthesis.cancel();
     }
   },
   watch: {
