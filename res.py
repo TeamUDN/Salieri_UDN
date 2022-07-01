@@ -3,7 +3,7 @@ from gen_img.gen_img import generate
 from googletrans import Translator
 
 from chat import chat2
-from chat import chat_gpt,chat_emoji
+from chat import chat_gpt,chat_emoji,chat_eng
 from mask_dec import detection
 from mask_dec import cap
 
@@ -19,14 +19,15 @@ def responce(text,flag,model,chat):
     pose="def"
 
     if flag==0:
-        choose=['・絵文字モードを開始：映画の題名から絵文字を推定します','・絵文字モードを終了：絵文字モードを終了します。'
+        choose=['・会話モードを開始　：　AIと自由に会話できます。','・絵文字モードを開始：映画の題名から絵文字を推定します','・英会話モードを開始　：　質問に対して英語で答えます。'
         ,'・人の画像を生成　：　指定した特徴の顔画像を生成します。','・こんにちは　：　案内を開始します','・ありがとう　　　：　案内を終了します。']
 
     if text=="OK サリエリ":
         res="お呼びでしょうか \n  以下の音声認識コマンドを入力してください"
-        choose=['・絵文字モードを開始：映画の題名から絵文字を推定します','・絵文字モードを終了：絵文字モードを終了します。'
+        choose=['・会話モードを開始　：　AIと自由に会話できます。','・絵文字モードを開始：映画の題名から絵文字を推定します','・英会話モードを開始　：　質問に対して英語で答えます。'
         ,'・人の画像を生成　：　指定した特徴の顔画像を生成します。','・こんにちは　：　案内を開始します','・ありがとう　　　：　案内を終了します。']
         flag=0
+        chat=0
         return res,choose,flag,model,chat,pose
     
 
@@ -74,19 +75,27 @@ def responce(text,flag,model,chat):
         choose=[]
         return res,choose,flag,model,chat,pose
 
-    """
+    
     if text=="会話モードを開始" and flag==0:
         flag=2
         res="会話モードに移行します"
+        chat=0
         return res,choose,flag,model,chat,pose
-    """
+    
 
     if text=="絵文字モードを開始" and flag==0:
         flag=3
         res="絵文字モードに移行します"
         choose=[]
         return res,choose,flag,model,chat,pose
-    """
+
+    if text=="英会話モードを開始" and flag==0:
+        flag=4
+        res="英会話モードを開始します"
+        choose=[]
+        chat=0
+        return res,choose,flag,model,chat,pose
+    
     if text=="会話モードを終了":
         if flag!=2:
             res="会話モードはまだ開始していません。"
@@ -94,7 +103,18 @@ def responce(text,flag,model,chat):
         else:
             flag=2
             res="会話モードを終了します。"
-    """
+    
+
+    if text=="英会話モードを終了":
+        if flag!=4:
+            res="英会話モードはまだ開始していません"
+            choose=[]
+            return res,choose,flag,model,chat,pose
+        else:
+            flag=2
+            res="英会話モードを終了"
+            choose=[]
+            return res,choose,flag,model,chat,pose
 
     if text=="絵文字モードを終了":
         if flag!=3:
@@ -165,6 +185,12 @@ def responce(text,flag,model,chat):
         #res=chat2(text)
         res,prompt=chat_emoji(text,chat)
         #chat=prompt+res
+        return res,choose,flag,model,chat,pose
+
+    if flag==4:
+        #res=chat2(text)
+        res,prompt=chat_eng(text,chat)
+        chat=prompt+res
         return res,choose,flag,model,chat,pose
 
 

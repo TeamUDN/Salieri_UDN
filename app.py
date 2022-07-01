@@ -32,16 +32,22 @@ def show():
     #状態の更新
     session["flag"]=flag
     session["model"]=model
-    if chat!="":
-        chat_sq=session["chat"]+chat
-        chat_list=chat_sq.split("人間:")
-        #print(chat_list)
-        if len(chat_list)>3:
-            chat_sq="人間:"+chat_list[-2]+"人間:"+chat_list[-1]
 
-        print("-----")
-        print(chat_sq)
-        session["chat"]=chat_sq
+    if chat!="":
+        if chat==0:
+            print("chat reset")
+            session["chat"]=""
+        else:
+            chat_sq=session["chat"]+chat
+            chat_list=chat_sq.split("You:")
+            #print(chat_list)
+            if len(chat_list)>3:
+                chat_sq="You:"+chat_list[-2]+"You:"+chat_list[-1]
+
+            print("-----")
+            #print(chat_sq)
+            session["chat"]=chat_sq
+    
     
     
 
