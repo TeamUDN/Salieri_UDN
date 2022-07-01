@@ -1,11 +1,11 @@
 
-from gen_img.gen_img import generate
-from googletrans import Translator
+#from gen_img.gen_img import generate
+#from googletrans import Translator
 
 from chat import chat2
 from chat import chat_gpt,chat_emoji
-from mask_dec import detection
-from mask_dec import cap
+#from mask_dec import detection
+#from mask_dec import cap
 
 def responce(text,flag,model,chat):
     """
@@ -34,8 +34,9 @@ def responce(text,flag,model,chat):
         f = open('txt/op.txt', 'r',encoding='UTF-8')
         t2 = f.read()
         choose=['・東京電機大学について','・人工知能研究室について','・私について']
-        file_name=cap.cap()
-        num=detection.test2(file_name)
+        #file_name=cap.cap()
+        #num=detection.test2(file_name)
+        num="hoge"
         t=f"こんにちは！ {num}人のお客様！"
         res=t+t2
         return res,choose,flag,model,chat,pose
@@ -133,9 +134,9 @@ def responce(text,flag,model,chat):
         return res,choose,flag,model,chat,pose
 
     if text=="よろしく" and flag==0:
-        file_name=cap.cap()
-        #num=detection.test("C:/Users/student/2022_OC_Ikeda/Salieri_UDN/mask_dec/img")
-        num=detection.test2(file_name)
+        #file_name=cap.cap()
+        #num=detection.test2(file_name)
+        num="hoge"
         res=f"{num}人のお客様いらっしゃいませ"
         return res,choose,flag,model,chat,pose
 
@@ -149,9 +150,9 @@ def responce(text,flag,model,chat):
     if flag==1:
         res=text+"を生成しました"
 
-        tr = Translator()
-        tr=tr.translate(text=text, src="ja", dest="en").text
-        generate(tr)
+        #tr = Translator()
+        #tr=tr.translate(text=text, src="ja", dest="en").text
+        #generate(tr)
         flag=2
         return res,choose,flag,model,chat,pose
 
