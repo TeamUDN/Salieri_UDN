@@ -41,6 +41,10 @@
         </p>
       </div>
     </div>
+    <div class="recordingBtnArea">
+      <button v-if="recordingFlag" class="recordingBtn" @click='recording'><span class="material-icons-outlined">keyboard_voice</span></button>
+      <button v-if="!recordingFlag" class="recordingBtn" @click='recording'><span class="material-icons-outlined">mic_off</span></button>
+    </div>
     <img class="mainAreaLogo" src="../static/img/Salieri.png" alt="Salieri logo">
   </div>
 </div>
