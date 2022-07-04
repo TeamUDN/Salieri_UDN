@@ -15,6 +15,7 @@ const face = new Vue({
     debugFlg: '',
     modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。',
     choiceArr: [],
+    recordingFlag: true,
   },
   mounted: function () {
     this.faceFuncStart();
@@ -76,7 +77,7 @@ const face = new Vue({
               if (self.pageFirstChageFlag) {
                 self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのサリエリです。「こんにちは」と話しかけて下さい。');
                 self.pageFirstChageFlag = false;
-                
+
               }
             }
 
@@ -101,7 +102,7 @@ const face = new Vue({
             facetimeCount = 0;
             NotfacetimeCount += 1;
             //☆約3分人を認識しなければフラグを元に戻す
-            
+
             //if (NotfacetimeCount >= 10800) {
               //if (NotfacetimeCount >= 300) {//デバック用（5秒）
             //  self.pageChangeFlag = true;
@@ -115,92 +116,94 @@ const face = new Vue({
       });
     },
     webSpeechAPI: function () {
-      var self = this;
-      var voiceCheckFlag = false;
-      self.recognition = new webkitSpeechRecognition();
-      self.recognition.lang = "ja-JP";
-      self.recognition.continuous = false;
+      if (this.recordingFlag == true) {
+        var self = this;
+        var voiceCheckFlag = false;
+        self.recognition = new webkitSpeechRecognition();
+        self.recognition.lang = "ja-JP";
+        self.recognition.continuous = false;
 
+        self.recognition.start(); // 認識開始
 
-      self.recognition.start(); // 認識開始
-
-      self.recognition.onspeechstart = () => { console.log('on speech start') }
-      self.recognition.onspeechend = () => {
-        console.log('on speech end')
-        setTimeout(
-          function () {
-            if (voiceCheckFlag === false) {
-              console.log("0.5秒経過しました")
-              voiceCheckFlag = false;
-              self.recordingStartFlagCount++;
-            }
-          }, 500);
-      }
-      self.recognition.onosundstart = () => { console.log('on sound start') }
-      self.recognition.onsoundend = () => { console.log('on sound end') }
-
-      self.recognition.onaudiostart = () => { console.log('on audio start') }
-      self.recognition.onaudioend = () => { console.log('on audio end') }
-
-      self.recognition.onnomatch = function () {
-        console.log('音声は認識できませんでした。');
-        self.recordingStartFlagCount++;
-      }
-      self.recognition.onerror = function () {
-        console.log('認識できませんでした');
-        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-        self.recordingStartFlagCount++;
-      }
-
-      self.recognition.onresult = function (e) { // 音声認識時
-        voiceCheckFlag = true;
-        console.log(self.pageChangeFlag)
-        //ページ遷移前か確認
-        if (e.results.length > 0 && self.pageChangeFlag == false) {
-          // 音声認識で取得した文章をgetMessageに代入
-          self.getMessage = e.results[0][0].transcript;
-          console.log(self.getMessage);
-          // ajax通信
-          axios.post('/chat', {
-            chatMessage: self.getMessage
-          })
-            .then(response => { // 成功
-              var res = JSON.parse(response.data.values);
-              console.log(res.message);
-              if (res.choose.length !== 0) {
-                self.choiceArr = res.choose;
-              } else {
-                self.choiceArr = [];
+        self.recognition.onspeechstart = () => { console.log('on speech start') }
+        self.recognition.onspeechend = () => {
+          console.log('on speech end')
+          setTimeout(
+            function () {
+              if (voiceCheckFlag === false) {
+                console.log("0.5秒経過しました")
+                voiceCheckFlag = false;
+                self.recordingStartFlagCount++;
               }
-              self.modelMessage = res.message;
-              self.speech(res.message);
-              self.pose = res.pose;
-              self.model = res.model;
-              //終了コマンドでモーダルを元に戻す
-              if (res.message == "ご利用ありがとうございました") {
-                self.pageChangeFlag = true;
-                self.pageFirstChageFlag = true;
-                self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
-                self.getMessage="";
-              }
-            })
-            .catch(function (error) { // 失敗
-              console.log(error);
-              // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-              self.recordingStartFlagCount++;
-            });
-        } else {
-          //ページ遷移前に音声を受け取った場合は再度認識開始
+            }, 500);
+        }
+        self.recognition.onosundstart = () => { console.log('on sound start') }
+        self.recognition.onsoundend = () => { console.log('on sound end') }
+
+        self.recognition.onaudiostart = () => { console.log('on audio start') }
+        self.recognition.onaudioend = () => { console.log('on audio end') }
+
+        self.recognition.onnomatch = function () {
+          console.log('音声は認識できませんでした。');
           self.recordingStartFlagCount++;
         }
-      }
+        self.recognition.onerror = function () {
+          console.log('認識できませんでした');
+          // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+          self.recordingStartFlagCount++;
+        }
 
-      //音声認識が終了したら再スタート(読み切る前に認識スタートしてしまう．．．)
-      self.recognition.onend = () => {
-        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-        //self.recordingStartFlagCount++;
-      }
+        self.recognition.onresult = function (e) { // 音声認識時
+          voiceCheckFlag = true;
+          console.log(self.pageChangeFlag)
+          //ページ遷移前か確認
+          if (e.results.length > 0 && self.pageChangeFlag == false) {
+            // 音声認識で取得した文章をgetMessageに代入
+            self.getMessage = e.results[0][0].transcript;
+            console.log(self.getMessage);
+            // ajax通信
+            axios.post('/chat', {
+              chatMessage: self.getMessage
+            })
+              .then(response => { // 成功
+                var res = JSON.parse(response.data.values);
+                console.log(res.message);
+                if (res.choose.length !== 0) {
+                  self.choiceArr = res.choose;
+                } else {
+                  self.choiceArr = [];
+                }
+                self.modelMessage = res.message;
+                self.speech(res.message);
+                self.pose = res.pose;
+                self.model = res.model;
+                //終了コマンドでモーダルを元に戻す
+                if (res.message == "ご利用ありがとうございました") {
+                  self.pageChangeFlag = true;
+                  self.pageFirstChageFlag = true;
+                  self.modelMessage = "人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。";
+                  self.getMessage = "";
+                }
+              })
+              .catch(function (error) { // 失敗
+                console.log(error);
+                // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+                self.recordingStartFlagCount++;
+              });
+          } else {
+            //ページ遷移前に音声を受け取った場合は再度認識開始
+            self.recordingStartFlagCount++;
+          }
+        }
 
+        /*
+        //音声認識が終了したら再スタート(読み切る前に認識スタートしてしまう．．．)
+        self.recognition.onend = () => {
+          // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+          self.recordingStartFlagCount++;
+        }
+        */
+      }
 
     },
     /*
@@ -228,7 +231,7 @@ const face = new Vue({
             var speak = new SpeechSynthesisUtterance();
             speak.text = res;
             speak.lang = "ja-JP";
-            speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
             speak.rate = 2;
             speak.pitch = 1.5;
             speechSynthesis.speak(speak);
@@ -243,9 +246,9 @@ const face = new Vue({
 
               if (res!="ご利用ありがとうございました"){
                 //音声認識再開
-              self.recordingStartFlagCount++
+                self.recordingStartFlagCount++
               }
-              
+
             }
           };
         } else {
@@ -254,9 +257,11 @@ const face = new Vue({
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
           speak.lang = "ja-JP";
-          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
-          speak.rate = 2;
-          speak.pitch = 1.5;
+          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
+          //speak.rate = 2;
+          speak.rate = 1; // デバック用
+          //speak.pitch = 1.5;
+          speak.pitch = 1; // デバック用
           speechSynthesis.speak(speak);
           speak.onstart = function () {
             //読み上げ開始！！！！！
@@ -301,13 +306,28 @@ const face = new Vue({
           }
         }
       }
+    },
+    soundStop: function () {
+      console.log('sound stop');
+      speechSynthesis.cancel();
+    },
+    recording: function () {
+      this.recordingFlag = !this.recordingFlag
+      if (this.recordingFlag == true) {
+        console.log('音声認識するよ')
+        this.recordingStartFlagCount++
+      } else {
+        console.log('音声認識やめるよ')
+        this.recognition.stop();
+        this.recordingStartFlagCount++
+      }
     }
   },
   watch: {
     recordingStartFlagCount: function (count) {
       console.log(count);
-      // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
-      this.webSpeechAPI();
+        // recordingStartFlagCountの値の変化をトリガーとしてwebSpeechAPI関数を発動させる
+        this.webSpeechAPI();
     }
   }
 });
