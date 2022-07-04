@@ -75,7 +75,7 @@ const face = new Vue({
             //if (facetimeCount >= 10800) {//デバック用（3分）
               self.pageChangeFlag = false
               if (self.pageFirstChageFlag) {
-                self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのサリエリです。「こんにちは」と話しかけて下さい。');
+                self.speech('人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのサリエリです。「こんにちは」と話しかけて下さい。',"jpn");
                 self.pageFirstChageFlag = false;
 
               }
@@ -174,7 +174,7 @@ const face = new Vue({
                   self.choiceArr = [];
                 }
                 self.modelMessage = res.message;
-                self.speech(res.message);
+                self.speech(res.message,res.lang);
                 self.pose = res.pose;
                 self.model = res.model;
                 //終了コマンドでモーダルを元に戻す
@@ -215,7 +215,7 @@ const face = new Vue({
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
     */
-    speech: function (res) {
+    speech: function (res,lang) {
       var synth = window.speechSynthesis;
       var voices = [];
       var self = this;
@@ -230,10 +230,15 @@ const face = new Vue({
             // 読み上げ
             var speak = new SpeechSynthesisUtterance();
             speak.text = res;
-            speak.lang = "ja-JP";
-            speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
-            speak.rate = 2;
-            speak.pitch = 1.5;
+            if (lang=="jpn"){
+              speak.lang = "ja-JP";
+              speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+              speak.rate = 2;
+              speak.pitch = 1.5;
+            }else{
+              console.log("eng")
+              speak.lang = "en-US";
+            }
             speechSynthesis.speak(speak);
             speak.onstart = function () {
               //読み上げ開始！！ 口のフラグをオンにする
@@ -256,12 +261,17 @@ const face = new Vue({
           // 読み上げ
           var speak = new SpeechSynthesisUtterance();
           speak.text = res;
-          speak.lang = "ja-JP";
-          speak.voice = voices[58]; // 本番環境では voices[0]; に修正してください
-          //speak.rate = 2;
-          speak.rate = 1; // デバック用
-          //speak.pitch = 1.5;
-          speak.pitch = 1; // デバック用
+          if (lang=="jpn"){
+            speak.lang = "ja-JP";
+            speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+            speak.rate = 2;
+            speak.pitch = 1.5;
+          }else{
+            console.log("eng")
+            speak.lang = "en-US";
+          }
+          
+          
           speechSynthesis.speak(speak);
           speak.onstart = function () {
             //読み上げ開始！！！！！
@@ -286,10 +296,15 @@ const face = new Vue({
         // 読み上げ
         var speak = new SpeechSynthesisUtterance();
         speak.text = res;
-        speak.lang = "ja-JP";
-        speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
-        speak.rate = 2;
-        speak.pitch = 1.5;
+        if (lang=="jpn"){
+          speak.lang = "ja-JP";
+          speak.voice = voices[0]; // 本番環境では voices[0]; に修正してください
+          speak.rate = 2;
+          speak.pitch = 1.5;
+        }else{
+          console.log("eng")
+          speak.lang = "en-US";
+        }
         speechSynthesis.speak(speak);
         speak.onstart = function () {
           //読み上げ開始！！！！！

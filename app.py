@@ -25,7 +25,7 @@ def show():
     model=session["model"]
     chat=session["chat"]
 
-    res,choose,flag,model,chat,pose=responce(txt,flag,model,chat)
+    res,choose,flag,model,chat,pose,lang=responce(txt,flag,model,chat)
 
 
     
@@ -55,7 +55,8 @@ def show():
         "message": res,
         "choose": choose,
         "pose": pose,
-        "model": model
+        "model": model,
+        "lang":lang
     }
 
     return jsonify(values=json.dumps(return_json))
