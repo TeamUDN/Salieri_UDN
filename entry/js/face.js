@@ -16,6 +16,7 @@ const face = new Vue({
     modelMessage: '人間を検出しました　\n いらっしゃいませ！私はオープンキャンパス案内AIのSalieriです。「こんにちは」と話しかけて下さい。',
     choiceArr: [],
     recordingFlag: true,
+    nowRecording: false,
   },
   mounted: function () {
     this.faceFuncStart();
@@ -140,8 +141,14 @@ const face = new Vue({
         self.recognition.onosundstart = () => { console.log('on sound start') }
         self.recognition.onsoundend = () => { console.log('on sound end') }
 
-        self.recognition.onaudiostart = () => { console.log('on audio start') }
-        self.recognition.onaudioend = () => { console.log('on audio end') }
+        self.recognition.onaudiostart = () => {
+          console.log('on audio start');
+          this.nowRecording = true;
+        }
+        self.recognition.onaudioend = () => {
+          console.log('on audio end');
+          this.nowRecording = false;
+        }
 
         self.recognition.onnomatch = function () {
           console.log('音声は認識できませんでした。');

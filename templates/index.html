@@ -36,7 +36,7 @@
       <div class="innerFlex">
         <p>入力音声: [[ getMessage ]]</p>
         <div class="inner">
-          <span class="point -active"></span>
+          <span class="point" :class="{'-active': nowRecording === true}"></span>
         </div>
       </div>
       <p>[[ modelMessage ]]</p>
