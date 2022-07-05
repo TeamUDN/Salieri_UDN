@@ -33,7 +33,12 @@
     </div>
     <!-- message area -->
     <div class="dialogueBase messageArea">
-      <p>入力音声: [[ getMessage ]]</p>
+      <div class="innerFlex">
+        <p>入力音声: [[ getMessage ]]</p>
+        <div class="inner">
+          <span class="point -active"></span>
+        </div>
+      </div>
       <p>[[ modelMessage ]]</p>
       <!-- select area -->
       <div class="" v-if="choiceArr.length !== 0">
