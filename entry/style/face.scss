@@ -65,3 +65,52 @@
     border-radius: 10px;
   }
 }
+
+@keyframes pulseMotion {
+  0% {
+    transform: translate(-50%, -50%) scale(1, 1);
+    background-color: #b42f2f8a;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(6.5, 6.5);
+    background-color: #b42f2f00;
+  }
+}
+.inner {
+  width: fit-content;
+  z-index: 5;
+  margin: 0.5rem;
+}
+.innerFlex {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.point {
+  display: block;
+  position: relative;
+  width: 1.3rem;
+  height: 1.3rem;
+  background-color: #604444;
+  border-radius: 50%;
+  transition: background-color cubic-bezier(0.215, 0.61, 0.355, 1) .4s;
+  &::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    transition: opacity linear 0.4s;
+    content: '';
+  }
+}
+.-active {
+  background-color: #b42f2f;
+  &::after {
+    animation: pulseMotion 1.4s linear infinite;
+  }
+}
