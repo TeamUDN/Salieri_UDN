@@ -38,9 +38,17 @@
         <div class="msgFlex">
           <p>[[ modelMessage ]]</p>
           <!-- select area -->
-          <div class="" v-if="choiceArr.length !== 0">
-            <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
-            </p>
+          <div class="picFlex" v-if="choiceArr.length !== 0">
+            <div>
+              <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
+              </p>
+            </div>
+            <div class="pictureArea">
+              <img src="../static/img/university/univ1.png">
+              <img src="../static/img/university/univ2.jpg">
+              <img src="../static/img/university/univ3.jpg">
+              <img src="../static/img/university/univ4.jpg">
+            </div>
           </div>
         </div>
         <div class="inner">
