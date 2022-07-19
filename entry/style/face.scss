@@ -119,3 +119,65 @@
     animation: pulseMotion 1.4s linear infinite;
   }
 }
+
+.picFlex {
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.pictureArea {
+  width: 15rem;
+  height: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  img {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    animation: change-img-anim 30s infinite;
+    &:nth-of-type(1) {
+      animation-delay: 0s;
+    }
+    &:nth-of-type(2) {
+      width: auto;
+      height: 10rem;
+      margin: 0 auto;
+      animation-delay: 7s;
+    }
+    &:nth-of-type(3) {
+      width: auto;
+      height: 10rem;
+      margin: 0 auto;
+      animation-delay: 14s;
+    }
+    &:nth-of-type(4) {
+      width: auto;
+      height: 10rem;
+      margin: 0 auto;
+      animation-delay: 21s;
+    }
+  }
+}
+@keyframes change-img-anim {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
