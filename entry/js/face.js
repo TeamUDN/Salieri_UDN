@@ -17,6 +17,11 @@ const face = new Vue({
     choiceArr: [],
     recordingFlag: true,
     nowRecording: false,
+    picFlag: false,
+    picUrl1: '',
+    picUrl2: '',
+    picUrl3: '',
+    picUrl4: '',
   },
   mounted: function () {
     this.faceFuncStart();
@@ -177,6 +182,29 @@ const face = new Vue({
                 console.log(res.message);
                 if (res.choose.length !== 0) {
                   self.choiceArr = res.choose;
+                  if (res.message.match(/東京電機大学では/)) {
+                    // 東京電機大学についてのとき
+                    console.log('denkidai');
+                    self.picFlag = true;
+                    self.picUrl1 = '../static/img/university/univ1.png';
+                    self.picUrl2 = '../static/img/university/univ2.jpg';
+                    self.picUrl3 = '../static/img/university/univ3.jpg';
+                    self.picUrl4 = '../static/img/university/univ4.jpg';
+                  } else if (res.message.match(/人工知能研究室では/)) {
+                    // 人工知能研究室についてのとき
+                    console.log('jinkoutinou');
+                    self.picFlag = true;
+                    self.picUrl1 = '../static/img/laboratory/lab1.jpg';
+                    self.picUrl2 = '../static/img/laboratory/lab2.jpg';
+                    self.picUrl3 = '../static/img/laboratory/lab3.jpg';
+                    self.picUrl4 = '../static/img/laboratory/lab4.jpg';
+                  } else {
+                    self.picFlag = false;
+                    self.picUrl1 = '';
+                    self.picUrl2 = '';
+                    self.picUrl3 = '';
+                    self.picUrl4 = '';
+                  }
                 } else {
                   self.choiceArr = [];
                 }

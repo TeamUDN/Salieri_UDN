@@ -43,11 +43,11 @@
               <p v-for="count in choiceArr.length">[[ choiceArr[count - 1] ]]
               </p>
             </div>
-            <div class="pictureArea">
-              <img src="../static/img/university/univ1.png">
-              <img src="../static/img/university/univ2.jpg">
-              <img src="../static/img/university/univ3.jpg">
-              <img src="../static/img/university/univ4.jpg">
+            <div class="pictureArea" v-if="picFlag">
+              <img :src="picUrl1">
+              <img :src="picUrl2">
+              <img :src="picUrl3">
+              <img :src="picUrl4">
             </div>
           </div>
         </div>
