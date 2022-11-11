@@ -14,6 +14,7 @@ def responce(text,flag,model,chat):
     flag=1:画像生成モード
     flag=2:会話モード
     flag=3:絵文字モード
+    flag=4:英会話モード
     """
     res=text
     choose=[]
@@ -72,7 +73,7 @@ def responce(text,flag,model,chat):
         res="ガッ"
         return res,choose,flag,model,chat,pose,lang
 
-    if text=="人の画像を生成" and flag==0:
+    if ("画像" in text) and flag==0:
         flag=1
         res="どんな人を生成しますか"
         choose=[]
@@ -86,13 +87,13 @@ def responce(text,flag,model,chat):
         return res,choose,flag,model,chat,pose,lang
     
 
-    if text=="絵文字モードを開始" and flag==0:
+    if ("絵文字" in text) and flag==0:
         flag=3
         res="絵文字モードに移行します"
         choose=[]
         return res,choose,flag,model,chat,pose,lang
 
-    if text=="英会話モードを開始" and flag==0:
+    if ("英" in text) and flag==0:
         flag=4
         res="英会話モードを開始します"
         choose=[]
@@ -193,7 +194,10 @@ def responce(text,flag,model,chat):
     if flag==4:
         #res=chat2(text)
         res,prompt=chat_eng(text,chat)
-        chat=prompt+res
+        if res=="":
+            chat=0
+        else:
+            chat=prompt+res
         lang="eng"
         return res,choose,flag,model,chat,pose,lang
 

@@ -41,8 +41,8 @@ def show():
             chat_sq=session["chat"]+chat
             chat_list=chat_sq.split("You:")
             #print(chat_list)
-            if len(chat_list)>3:
-                chat_sq="You:"+chat_list[-2]+"You:"+chat_list[-1]
+            if len(chat_list)>4:
+                chat_sq="\nYou:"+chat_list[-3]+"You:"+chat_list[-2]+"You:"+chat_list[-1]
 
             print("-----")
             #print(chat_sq)
